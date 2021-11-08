@@ -1,0 +1,153 @@
+@import "../styling/variables";
+
+* {
+  font-family: "Roboto Light", serif;
+  background-color: $colorBackground;
+  color: $colorOrange;
+}
+
+.flex-container-row {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.flex-container-column {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+#sidebar-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: $colorOrange;
+  align-items: center;
+
+  &_close-button {
+    background-color: $colorOrange;
+    color: $black;
+    font-size: 20px;
+    font-weight: bold;
+    border: none;
+    margin-left: auto;
+    margin-right: 0.5em;
+    margin-top: 0.5em;
+    cursor: pointer;
+
+    &:hover {
+      color: $colorGray;
+    }
+  }
+
+  > a {
+    background-color: $colorOrange;
+    color: $black;
+    font-size: 22px;
+    font-weight: bold;
+    margin: 1em 0.5em;
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover {
+      color: $colorGray;
+    }
+  }
+}
+
+.line {
+  border: 1px solid $black;
+  width: 80%;
+}
+
+#registered-header {
+  align-items: center;
+  > p {
+    font-size: 18px;
+    margin-right: 0.2em;
+  }
+}
+
+#menu-container {
+  align-items: center;
+  margin-left: 0.5em;
+  margin-right: 0;
+
+  > button {
+    font-size: 18px;
+    font-weight: bold;
+    border: 2px solid $colorOrange;
+    background-color: $colorOrange;
+    color: $colorBackground;
+    box-shadow: 1px 1px 1px $black;
+    cursor: pointer;
+
+    &:hover {
+      color: $colorOrange;
+      background-color: $colorBackground;
+    }
+  }
+}
+
+header {
+  > div {
+    > h1 {
+      margin: 1em 2em;
+      cursor: pointer;
+
+      > a {
+        text-decoration: none;
+
+        &:hover {
+          color: $colorGray;
+        }
+      }
+    }
+
+    > div {
+      text-align: center;
+      margin: 1em 2em 1em auto;
+
+      .header-button {
+        margin: 1em;
+        border: 2px solid $colorOrange;
+        box-shadow: 1px 1px 1px $black;
+        border-radius: 8px;
+        padding: 0.8em;
+        font-weight: bold;
+        font-size: 15px;
+        cursor: pointer;
+
+        &:hover {
+          border-color: $colorGray;
+        }
+      }
+    }
+  }
+}
+
+footer {
+  text-align: center;
+
+  > div {
+    > div {
+      margin: 1em 2em;
+
+      > p > a {
+        color: $colorGray;
+        font-size: 14px;
+        text-decoration: none;
+
+        &:hover {
+          color: $colorOrange;
+        }
+      }
+    }
+
+    > div:last-child {
+      margin-left: auto;
+    }
+  }
+}

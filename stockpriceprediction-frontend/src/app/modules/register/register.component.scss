@@ -1,0 +1,64 @@
+@import "../../../styling/variables";
+
+* {
+  font-family: "Roboto Light", serif;
+  background-color: $white;
+  color: $black;
+}
+
+.flex-container-row {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.flex-container-column {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+form {
+  padding: 9.6em 2em;
+
+  > div {
+    width: 30%;
+    margin: auto;
+    align-items: center;
+
+    > div {
+      margin-bottom: 1em;
+      align-items: center;
+      text-align: left;
+    }
+
+    label {
+      font-size: 17px;
+      margin-right: 0.5em;
+    }
+
+    input {
+      width: 15em;
+      border: 2px solid $colorOrange;
+      color: $black;
+      font-size: 16px;
+      cursor: pointer;
+
+      &:hover {
+        border-color: $black;
+      }
+    }
+
+    button {
+      font-size: 18px;
+      padding: 0.2em 1em;
+      cursor: pointer;
+      border-color: $colorOrange;
+      box-shadow: 1px 1px 1px $black;
+
+      &:hover {
+        border-color: $black;
+      }
+    }
+  }
+}
