@@ -34,8 +34,7 @@
       font-size: 20px;
       border: 2px solid $colorOrange;
       border-radius: 10px;
-      padding: 0.5em;
-      padding-right: 1.4em;
+      padding: 0.5em 1.4em 0.5em 0.5em;
     }
 
     button {
@@ -76,6 +75,17 @@
 
     > h2 {
       color: $colorOrange;
+    }
+
+    > button {
+      border: none;
+      cursor: pointer;
+      font-size: 24px;
+      color: $black;
+
+      &:hover {
+        color: $colorOrange;
+      }
     }
 
     > div {

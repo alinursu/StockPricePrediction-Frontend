@@ -20,6 +20,10 @@ const routes: Routes = [
     component: AllStocksComponent
   },
   {
+    path: 'favorite-stocks',
+    component: AllStocksComponent
+  },
+  {
     path: '',
     component: MainPageComponent,
     pathMatch: 'full'

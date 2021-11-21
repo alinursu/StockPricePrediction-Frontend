@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AllStocksComponent} from './all-stocks/all-stocks.component';
+import {BrowserModule} from "@angular/platform-browser";
 
 
 @NgModule({
@@ -8,7 +9,8 @@ import {AllStocksComponent} from './all-stocks/all-stocks.component';
     AllStocksComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    BrowserModule
   ]
 })
 export class AllStocksModule {

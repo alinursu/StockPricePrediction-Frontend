@@ -1,8 +1,3 @@
-<!--TODO: angular route with query string parameters (search)-->
-<!--TODO: angular route with anchors (pagination)-->
-<!--TODO: should work both in the same time-->
-<!--TODO: make it programatically generated (10 stocks per page)-->
-
 <div id="searchBar" class="flex-container-column">
   <form method="get" action="/all-stocks" class="flex-container-row">
     <input type="text" id="search" name="search" placeholder="Cauta..."/>
@@ -14,6 +9,7 @@
   <div class="stock-container flex-container-column">
     <div class="stock flex-container-row">
       <h2>StockName (Abrev.)</h2>
+      <button (click)="markAsFavorite(0)">&#9733;</button>
       <div class="flex-container-row">
         <h3>124.35$</h3>
         <button (click)="displayDropDown(0)"><i class="arrow down"></i></button>
@@ -37,9 +33,202 @@
   <div class="stock-container flex-container-column">
     <div class="stock flex-container-row">
       <h2>StockName (Abrev.)</h2>
+      <button (click)="markAsFavorite(1)">&#9733;</button>
       <div class="flex-container-row">
         <h3>124.35$</h3>
         <button (click)="displayDropDown(1)"><i class="arrow down"></i></button>
+      </div>
+    </div>
+
+    <div class="stock-dropdown stock-dropdown-hidden flex-container-column">
+      <div class="line"></div>
+
+      <img src="/assets/dummy-price-graph.jpg" alt="">
+      <p>Valoarea actuala: <b>124.35$</b></p>
+      <p>Valoarea prezisa pentru maine: <b>122.35$</b></p>
+      <p class="price-reduced">&#8600; Scadere preconizata de 1.63%</p>
+
+      <div class="line"></div>
+
+      <a href="#">Vreau sa vad ce cred ceilalti utilizatori</a>
+    </div>
+  </div>
+
+  <div class="stock-container flex-container-column">
+    <div class="stock flex-container-row">
+      <h2>StockName (Abrev.)</h2>
+      <button (click)="markAsFavorite(2)">&#9733;</button>
+      <div class="flex-container-row">
+        <h3>124.35$</h3>
+        <button (click)="displayDropDown(2)"><i class="arrow down"></i></button>
+      </div>
+    </div>
+
+    <div class="stock-dropdown stock-dropdown-hidden flex-container-column">
+      <div class="line"></div>
+
+      <img src="/assets/dummy-price-graph.jpg" alt="">
+      <p>Valoarea actuala: <b>124.35$</b></p>
+      <p>Valoarea prezisa pentru maine: <b>122.35$</b></p>
+      <p class="price-reduced">&#8600; Scadere preconizata de 1.63%</p>
+
+      <div class="line"></div>
+
+      <a href="#">Vreau sa vad ce cred ceilalti utilizatori</a>
+    </div>
+  </div>
+
+  <div class="stock-container flex-container-column">
+    <div class="stock flex-container-row">
+      <h2>StockName (Abrev.)</h2>
+      <button (click)="markAsFavorite(3)">&#9733;</button>
+      <div class="flex-container-row">
+        <h3>124.35$</h3>
+        <button (click)="displayDropDown(3)"><i class="arrow down"></i></button>
+      </div>
+    </div>
+
+    <div class="stock-dropdown stock-dropdown-hidden flex-container-column">
+      <div class="line"></div>
+
+      <img src="/assets/dummy-price-graph.jpg" alt="">
+      <p>Valoarea actuala: <b>124.35$</b></p>
+      <p>Valoarea prezisa pentru maine: <b>122.35$</b></p>
+      <p class="price-reduced">&#8600; Scadere preconizata de 1.63%</p>
+
+      <div class="line"></div>
+
+      <a href="#">Vreau sa vad ce cred ceilalti utilizatori</a>
+    </div>
+  </div>
+
+  <div class="stock-container flex-container-column">
+    <div class="stock flex-container-row">
+      <h2>StockName (Abrev.)</h2>
+      <button (click)="markAsFavorite(4)">&#9733;</button>
+      <div class="flex-container-row">
+        <h3>124.35$</h3>
+        <button (click)="displayDropDown(4)"><i class="arrow down"></i></button>
+      </div>
+    </div>
+
+    <div class="stock-dropdown stock-dropdown-hidden flex-container-column">
+      <div class="line"></div>
+
+      <img src="/assets/dummy-price-graph.jpg" alt="">
+      <p>Valoarea actuala: <b>124.35$</b></p>
+      <p>Valoarea prezisa pentru maine: <b>122.35$</b></p>
+      <p class="price-reduced">&#8600; Scadere preconizata de 1.63%</p>
+
+      <div class="line"></div>
+
+      <a href="#">Vreau sa vad ce cred ceilalti utilizatori</a>
+    </div>
+  </div>
+
+  <div class="stock-container flex-container-column">
+    <div class="stock flex-container-row">
+      <h2>StockName (Abrev.)</h2>
+      <button (click)="markAsFavorite(5)">&#9733;</button>
+      <div class="flex-container-row">
+        <h3>124.35$</h3>
+        <button (click)="displayDropDown(5)"><i class="arrow down"></i></button>
+      </div>
+    </div>
+
+    <div class="stock-dropdown stock-dropdown-hidden flex-container-column">
+      <div class="line"></div>
+
+      <img src="/assets/dummy-price-graph.jpg" alt="">
+      <p>Valoarea actuala: <b>124.35$</b></p>
+      <p>Valoarea prezisa pentru maine: <b>122.35$</b></p>
+      <p class="price-reduced">&#8600; Scadere preconizata de 1.63%</p>
+
+      <div class="line"></div>
+
+      <a href="#">Vreau sa vad ce cred ceilalti utilizatori</a>
+    </div>
+  </div>
+
+  <div class="stock-container flex-container-column">
+    <div class="stock flex-container-row">
+      <h2>StockName (Abrev.)</h2>
+      <button (click)="markAsFavorite(6)">&#9733;</button>
+      <div class="flex-container-row">
+        <h3>124.35$</h3>
+        <button (click)="displayDropDown(6)"><i class="arrow down"></i></button>
+      </div>
+    </div>
+
+    <div class="stock-dropdown stock-dropdown-hidden flex-container-column">
+      <div class="line"></div>
+
+      <img src="/assets/dummy-price-graph.jpg" alt="">
+      <p>Valoarea actuala: <b>124.35$</b></p>
+      <p>Valoarea prezisa pentru maine: <b>122.35$</b></p>
+      <p class="price-reduced">&#8600; Scadere preconizata de 1.63%</p>
+
+      <div class="line"></div>
+
+      <a href="#">Vreau sa vad ce cred ceilalti utilizatori</a>
+    </div>
+  </div>
+
+  <div class="stock-container flex-container-column">
+    <div class="stock flex-container-row">
+      <h2>StockName (Abrev.)</h2>
+      <button (click)="markAsFavorite(7)">&#9733;</button>
+      <div class="flex-container-row">
+        <h3>124.35$</h3>
+        <button (click)="displayDropDown(7)"><i class="arrow down"></i></button>
+      </div>
+    </div>
+
+    <div class="stock-dropdown stock-dropdown-hidden flex-container-column">
+      <div class="line"></div>
+
+      <img src="/assets/dummy-price-graph.jpg" alt="">
+      <p>Valoarea actuala: <b>124.35$</b></p>
+      <p>Valoarea prezisa pentru maine: <b>122.35$</b></p>
+      <p class="price-reduced">&#8600; Scadere preconizata de 1.63%</p>
+
+      <div class="line"></div>
+
+      <a href="#">Vreau sa vad ce cred ceilalti utilizatori</a>
+    </div>
+  </div>
+
+  <div class="stock-container flex-container-column">
+    <div class="stock flex-container-row">
+      <h2>StockName (Abrev.)</h2>
+      <button (click)="markAsFavorite(8)">&#9733;</button>
+      <div class="flex-container-row">
+        <h3>124.35$</h3>
+        <button (click)="displayDropDown(8)"><i class="arrow down"></i></button>
+      </div>
+    </div>
+
+    <div class="stock-dropdown stock-dropdown-hidden flex-container-column">
+      <div class="line"></div>
+
+      <img src="/assets/dummy-price-graph.jpg" alt="">
+      <p>Valoarea actuala: <b>124.35$</b></p>
+      <p>Valoarea prezisa pentru maine: <b>122.35$</b></p>
+      <p class="price-reduced">&#8600; Scadere preconizata de 1.63%</p>
+
+      <div class="line"></div>
+
+      <a href="#">Vreau sa vad ce cred ceilalti utilizatori</a>
+    </div>
+  </div>
+
+  <div class="stock-container flex-container-column">
+    <div class="stock flex-container-row">
+      <h2>StockName (Abrev.)</h2>
+      <button (click)="markAsFavorite(9)">&#9733;</button>
+      <div class="flex-container-row">
+        <h3>124.35$</h3>
+        <button (click)="displayDropDown(9)"><i class="arrow down"></i></button>
       </div>
     </div>
 
