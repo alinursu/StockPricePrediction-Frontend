@@ -1,0 +1,204 @@
+@import "../../../../styling/variables";
+
+* {
+  font-family: "Roboto Light", serif;
+  background-color: $white;
+  color: $black;
+}
+
+.flex-container-row {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.flex-container-column {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.stock-container {
+  width: 40%;
+
+}
+
+#searchBar {
+  margin: 1.5em 3em 3em 3em;
+  align-items: center;
+
+  form {
+    align-items: center;
+
+    input {
+      font-size: 20px;
+      border: 2px solid $colorOrange;
+      border-radius: 10px;
+      padding: 0.5em;
+      padding-right: 1.4em;
+    }
+
+    button {
+      -webkit-transform: rotate(315deg);
+      -moz-transform: rotate(315deg);
+      -o-transform: rotate(315deg);
+      transform: rotate(315deg);
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-size: 18px;
+      position: relative;
+      left: -1.4em;
+
+      &:hover {
+        color: $colorOrange;
+      }
+    }
+  }
+}
+
+#stocks {
+  margin: 1.5em 3em;
+  align-items: center;
+
+  .stock {
+    background-color: $colorBackground;
+    border: 1px solid $colorOrange;
+    border-radius: 15px;
+    box-shadow: 1.5px 1.5px 2px $black;
+    margin-bottom: 1.5em;
+    align-items: center;
+    padding: 0 0.5em;
+
+    * {
+      background-color: $colorBackground;
+    }
+
+    > h2 {
+      color: $colorOrange;
+    }
+
+    > div {
+      align-items: center;
+      margin-left: auto;
+
+      > h3 {
+        margin-right: 0.5em;
+      }
+
+      > button {
+        border: none;
+
+        .arrow {
+          cursor: pointer;
+          border: solid $black;
+          border-width: 0 3px 3px 0;
+          display: inline-block;
+          padding: 3px;
+
+          &:hover {
+            border-color: $colorOrange;
+          }
+        }
+
+        .down {
+          transform: rotate(45deg);
+          -webkit-transform: rotate(45deg);
+        }
+      }
+    }
+  }
+
+  .stock-dropdown {
+    background-color: $colorBackground;
+    margin-bottom: 1.5em;
+    position: relative;
+    top: -0.7em;
+    align-items: center;
+    border: 1px solid $colorOrange;
+    border-top: none;
+    box-shadow: 1.5px 1.5px 2px $black;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+
+    .line {
+      border: 1px solid $black;
+      width: 80%;
+      margin: 1em 0;
+    }
+
+    p {
+      font-size: 18px;
+      background-color: $colorBackground;
+      margin: 0.5em 0;
+
+      &.price-raised {
+        color: green;
+        font-weight: bold;
+      }
+
+      &.price-reduced {
+        color: red;
+        font-weight: bold;
+      }
+
+      b {
+        background-color: $colorBackground;
+      }
+    }
+
+    a {
+      margin-bottom: 1em;
+      text-decoration: none;
+      font-size: 16px;
+      border: 1px solid $colorOrange;
+      padding: 0.3em;
+      border-radius: 5px;
+      background-color: $colorOrange;
+
+      &:hover {
+        background-color: $colorBackground;
+      }
+    }
+  }
+
+  .stock-dropdown-hidden {
+    display: none;
+  }
+}
+
+#pagination-container {
+  margin: 1.5em 3em;
+  align-items: center;
+
+  #pagination {
+    align-items: center;
+
+    a {
+      margin: 0em 0.5em;
+      font-size: 20px;
+      text-decoration: none;
+
+      &:hover {
+        color: $colorOrange;
+      }
+
+      &.selected:hover {
+        color: $black;
+      }
+    }
+  }
+
+  .disabled {
+    pointer-events: none;
+    cursor: default;
+    text-decoration: none;
+    color: $colorGray;
+  }
+
+  .selected {
+    border: 1px solid $colorOrange;
+    border-radius: 5px;
+    background-color: $colorOrange;
+  }
+}

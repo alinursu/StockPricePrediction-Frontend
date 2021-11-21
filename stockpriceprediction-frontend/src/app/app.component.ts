@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {UserService} from "./services/user.service";
 import {Router} from "@angular/router";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,9 @@ export class AppComponent {
   public sidebarButtonText: string = "&#8594;";
 
   constructor(private userService: UserService,
-              private router: Router) {
+              private router: Router,
+              private titleService: Title) {
+    this.titleService.setTitle(this.title);
   }
 
   public getUserName(): string {
