@@ -1,27 +1,66 @@
-<form>
+<form [formGroup]="registerForm" (ngSubmit)="registerSubmitted()">
+  <h2 *ngIf="errorMessage" class="response-alert">{{errorMessage}}</h2>
+  <h2 *ngIf="successMessage" class="response-success">{{successMessage}}</h2>
+
   <div class="flex-container-column">
-    <!--  TODO: Angular form-->
-    <!--  TODO: Frontend validation of data-->
-    <div class="flex-container-row">
-      <label for="fname">Prenume:</label>
-      <input type="text" name="fname" id="fname">
+    <div class="flex-container-column">
+      <div *ngIf="firstName()?.invalid && (firstName()?.dirty || firstName()?.touched)">
+        <div *ngIf="!firstNameValidationRequired()" class="text-alert">
+          Acest camp este obligatoriu!
+        </div>
+      </div>
+
+      <div class="flex-container-row">
+        <label for="fname">Prenume:</label>
+        <input formControlName="firstName" type="text" id="fname">
+      </div>
     </div>
 
-    <div class="flex-container-row">
-      <label for="lname">Nume:</label>
-      <input type="text" name="lname" id="lname">
+    <div class="flex-container-column">
+      <div *ngIf="lastName()?.invalid && (lastName()?.dirty || lastName()?.touched)">
+        <div *ngIf="!lastNameValidationRequired()" class="text-alert">
+          Acest camp este obligatoriu!
+        </div>
+      </div>
+
+      <div class="flex-container-row">
+        <label for="lname">Nume:</label>
+        <input formControlName="lastName" type="text" id="lname">
+      </div>
     </div>
 
-    <div class="flex-container-row">
-      <label for="email">Email:</label>
-      <input type="text" name="email" id="email">
+    <div class="flex-container-column">
+      <div *ngIf="email()?.invalid && (email()?.dirty || email()?.touched)">
+        <div *ngIf="!emailValidationRequired()" class="text-alert">
+          Acest camp este obligatoriu!
+        </div>
+        <div *ngIf="!emailValidationIsEmail()" class="text-alert">
+          Textul introdus nu este o adresa de email!
+        </div>
+      </div>
+
+      <div class="flex-container-row">
+        <label for="email">Email:</label>
+        <input formControlName="email" type="text" id="email">
+      </div>
     </div>
 
-    <div class="flex-container-row">
-      <label for="password">Parola:</label>
-      <input type="password" name="password" id="password">
+    <div class="flex-container-column">
+      <div *ngIf="password()?.invalid && (password()?.dirty || password()?.touched)">
+        <div *ngIf="!passwordValidationRequired()" class="text-alert">
+          Acest camp este obligatoriu!
+        </div>
+        <div *ngIf="!passwordValidationMinLength()" class="text-alert">
+          Parola trebuie sa contina cel putin 6 caractere!
+        </div>
+      </div>
+
+      <div class="flex-container-row">
+        <label for="password">Parola:</label>
+        <input formControlName="password" type="password" id="password">
+      </div>
     </div>
 
-    <button>Inregistrare</button>
+    <button type="submit" [disabled]="!registerForm.valid" [ngClass]="!registerForm.valid ? 'disabled-button' : ''">Inregistrare</button>
   </div>
 </form>

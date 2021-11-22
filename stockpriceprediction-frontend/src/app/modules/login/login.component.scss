@@ -22,6 +22,11 @@ form {
   padding: 9.6em 2em;
   text-align: center;
 
+  .response-alert {
+    font-weight: bold;
+    color: red;
+  }
+
   > div {
     width: 30%;
     margin: auto;
@@ -58,6 +63,22 @@ form {
 
       &:hover {
         border-color: $black;
+      }
+    }
+
+    .text-alert {
+      font-size: 17px;
+      font-weight: bold;
+      color: #9a9a21;
+    }
+
+    .disabled-button {
+      border-color: $colorGray;
+      color: $colorGray;
+      cursor: default;
+
+      &:hover {
+        border-color: $colorGray;
       }
     }
   }

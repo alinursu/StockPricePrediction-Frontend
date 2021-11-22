@@ -7,11 +7,11 @@
         <button id="sidebar-menu_close-button" (click)="showSidebarMenu()">X</button>
         <a href="/all-stocks">Toate stock-urile</a>
         <div class="line"></div>
-        <a href="/favorite-stocks">Stock-uri urmarite</a>
+        <a href="/favorite-stocks">StockDto-uri urmarite</a>
       </div>
     </div>
 
-    <h1><a href="/">Stock Price Prediction</a></h1>
+    <h1><a href="/">StockDto Price Prediction</a></h1>
     <div *ngIf="getUserName() == ''" class="flex-container-row">
       <button class="header-button" onclick="location.href='/login'">Autentificare</button>
       <button class="header-button" onclick="location.href='/register'">Inregistrare</button>

@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit} from '@angular/core';
 import {StockService} from "../../../services/stock.service";
-import {Stock} from "../../../models/Stock";
+import {StockDto} from "../../../models/StockDto";
 
 @Component({
   selector: 'app-all-stocks',
@@ -49,7 +49,7 @@ export class AllStocksComponent implements OnInit {
     starNode.innerText = starNode.innerText == "★" ? "☆" : "★";
   }
 
-  public getStocks(): Stock[] {
+  public getStocks(): StockDto[] {
     return this.stockService.stocks;
   }
 }

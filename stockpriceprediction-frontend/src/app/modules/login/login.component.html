@@ -1,18 +1,37 @@
-<form>
+<form [formGroup]="loginForm" (ngSubmit)="loginSubmitted()">
+  <h2 *ngIf="errorMessage" class="response-alert">{{errorMessage}}</h2>
+
   <div class="flex-container-column">
-    <!--  TODO: Angular form-->
-    <!--  TODO: Frontend validation of data-->
-    <div class="flex-container-row">
-      <label for="email">Email:</label>
-      <input type="text" name="email" id="email">
+    <div class="flex-container-column">
+      <div *ngIf="email()?.invalid && (email()?.dirty || email()?.touched) && !errorMessage">
+        <div *ngIf="!emailValidationRequired()" class="text-alert">
+          Acest camp este obligatoriu!
+        </div>
+
+        <div *ngIf="!emailValidationIsEmail()" class="text-alert">
+          Textul introdus nu este o adresa de email!
+        </div>
+      </div>
+
+      <div class="flex-container-row">
+        <label for="email">Email:</label>
+        <input formControlName="email" type="text" id="email">
+      </div>
     </div>
 
-    <div class="flex-container-row">
-      <label for="password">Parola:</label>
-      <input type="password" name="password" id="password">
+    <div class="flex-container-column">
+      <div *ngIf="password()?.invalid && (password()?.dirty || password()?.touched) && !errorMessage">
+        <div *ngIf="!passwordValidationRequired()" class="text-alert">
+          Acest camp este obligatoriu!
+        </div>
+      </div>
+
+      <div class="flex-container-row">
+        <label for="password">Parola:</label>
+        <input formControlName="password" type="password" id="password">
+      </div>
     </div>
 
-<!--    TODO: This is just a demo example-->
-    <button (click)="raiseLoginEvent()">Autentificare</button>
+    <button type="submit" [disabled]="!loginForm.valid" [ngClass]="!loginForm.valid ? 'disabled-button' : ''">Autentificare</button>
   </div>
 </form>

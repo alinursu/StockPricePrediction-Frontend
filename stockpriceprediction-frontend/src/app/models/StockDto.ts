@@ -1,4 +1,4 @@
-export class Stock {
+export class StockDto {
   private readonly _name: string;
   private readonly _abbreviation: string;
   private readonly _actualValue: number;
