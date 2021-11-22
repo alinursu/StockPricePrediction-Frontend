@@ -18,6 +18,10 @@ export class LoginComponent implements OnInit {
               private router: Router,
               private formBuilder: FormBuilder,
               private cookieService: CookieService) {
+    if(this.cookieService.get('token') != '') {
+      this.router.navigate(['/forbidden'])
+    }
+
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]

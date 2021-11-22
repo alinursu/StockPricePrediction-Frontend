@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {AppComponent} from "../app.component";
 import {LoginComponent} from "../modules/login/login.component";
 import {MainPageComponent} from "../modules/main-page/main-page.component";
 import {RegisterComponent} from "../modules/register/register.component";
 import {AllStocksComponent} from "../modules/all-stocks/all-stocks/all-stocks.component";
 import {NotFoundComponent} from "../modules/not-found/not-found/not-found.component";
+import {ForbiddenComponent} from "../modules/forbidden/forbidden/forbidden.component";
 
 const routes: Routes = [
   {
@@ -25,6 +25,10 @@ const routes: Routes = [
     component: AllStocksComponent
   },
   {
+    path: 'forbidden',
+    component: ForbiddenComponent
+  },
+  {
     path: '',
     component: MainPageComponent,
     pathMatch: 'full'
@@ -34,7 +38,6 @@ const routes: Routes = [
     pathMatch: 'full',
     component: NotFoundComponent
   }
-  // TODO: Surpress user access if he is logged in or not
 ];
 
 @NgModule({

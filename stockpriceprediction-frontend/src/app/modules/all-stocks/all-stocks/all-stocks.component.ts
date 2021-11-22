@@ -1,6 +1,8 @@
 import {Component, ElementRef, OnInit} from '@angular/core';
 import {StockService} from "../../../services/stock.service";
 import {StockDto} from "../../../models/StockDto";
+import {Router} from "@angular/router";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-all-stocks',
@@ -9,7 +11,12 @@ import {StockDto} from "../../../models/StockDto";
 })
 export class AllStocksComponent implements OnInit {
   constructor(private htmlDocument: ElementRef,
-              private stockService: StockService) {
+              private stockService: StockService,
+              private router: Router,
+              private cookieService: CookieService) {
+    if(this.cookieService.get('token') == '') {
+      this.router.navigate(['/forbidden'])
+    }
   }
 
   ngOnInit(): void {}
