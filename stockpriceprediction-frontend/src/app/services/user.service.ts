@@ -3,7 +3,6 @@ import {LoginRequestDto} from "../models/dtos/LoginRequestDto";
 import {RegisterRequestDto} from "../models/dtos/RegisterRequestDto";
 import {BackendClientAPI} from "../models/apis/BackendClientAPI";
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -19,12 +18,13 @@ export class UserService {
     const response: Response = await this.backendClientAPI.loginRequest(loginRequestDto);
 
     let status = response.status;
+    const responseBody = await response.json();
     let text = "";
     let name = "";
 
     if (response.ok) {
-      text = JSON.parse(JSON.stringify(response.body))['token'];
-      name = JSON.parse(JSON.stringify(response.body))['name'];
+      text = responseBody.token;
+      name = responseBody.name;
     }
 
     if (response.status == 401) {
@@ -54,7 +54,8 @@ export class UserService {
       text = "Contul a fost creat!";
     }
 
-    if (response.status == 409) {
+    // TODO: Change it to 409 Conflict ?
+    if (response.status == 400) {
       text = "Adresa de email este asociata unui cont existent!";
     }
 

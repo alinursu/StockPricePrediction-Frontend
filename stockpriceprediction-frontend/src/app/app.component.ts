@@ -10,7 +10,7 @@ import {CookieService} from "ngx-cookie-service";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'StockDto Price Prediction';
+  title = 'Stock Price Prediction';
 
   public sidebarMenu: boolean = false;
   public sidebarButtonText: string = "&#8594;";

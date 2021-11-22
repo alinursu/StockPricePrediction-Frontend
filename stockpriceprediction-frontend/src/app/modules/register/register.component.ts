@@ -19,7 +19,7 @@ export class RegisterComponent implements OnInit {
               private formBuilder: FormBuilder,
               private router: Router,
               private cookieService: CookieService) {
-    if(this.cookieService.get('token') != '') {
+    if (this.cookieService.get('token') != '') {
       this.router.navigate(['/forbidden'])
     }
 
@@ -27,11 +27,11 @@ export class RegisterComponent implements OnInit {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.pattern('^.*(?=.{8,})(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!*@#$%^&+=]).*$')]]
     });
 
     this.registerForm.valueChanges.subscribe(value => {
-      if(!this.requested) {
+      if (!this.requested) {
         this.errorMessage = null;
         this.successMessage = null;
       }
@@ -39,27 +39,25 @@ export class RegisterComponent implements OnInit {
     })
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   public async registerSubmitted() {
     let response = await this.userService.handleRegisterRequest(this.registerForm.value);
 
     // @ts-ignore
-    if (response.status == 200) {
+    if (response.status == 201) {
+      console.log('x');
       // @ts-ignore
       this.successMessage = response.text;
-      this.registerForm.setValue({
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: ''
-      })
+      this.errorMessage = null;
     } else {
       // @ts-ignore
       this.errorMessage = response.text;
-      this.requested = true;
-      this.registerForm.controls['password'].setValue('');
+      this.successMessage = null;
     }
+    this.requested = true;
+    this.registerForm.controls['password'].setValue('');
   }
 
   public firstName(): AbstractControl | null {
@@ -98,7 +96,7 @@ export class RegisterComponent implements OnInit {
     return !this.password()?.errors?.['required'];
   }
 
-  public passwordValidationMinLength(): boolean {
-    return !this.password()?.errors?.['minlength'];
+  public passwordValidationPattern(): boolean {
+    return !this.password()?.errors?.['pattern'];
   }
 }

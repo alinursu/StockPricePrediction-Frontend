@@ -21,14 +21,19 @@
 form {
   padding: 9.6em 2em;
 
-  .response-alert {
-    font-weight: bold;
-    color: red;
-  }
+  #message-container {
+    width: 100%;
+    align-items: center;
 
-  .response-success {
-    font-weight: bold;
-    color: green;
+    .response-alert {
+      font-weight: bold;
+      color: red;
+    }
+
+    .response-success {
+      font-weight: bold;
+      color: green;
+    }
   }
 
   > div {

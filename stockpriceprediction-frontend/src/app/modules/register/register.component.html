@@ -1,10 +1,13 @@
 <form [formGroup]="registerForm" (ngSubmit)="registerSubmitted()">
-  <h2 *ngIf="errorMessage" class="response-alert">{{errorMessage}}</h2>
-  <h2 *ngIf="successMessage" class="response-success">{{successMessage}}</h2>
+  <div class="flex-container-column" id="message-container">
+    <h2 *ngIf="errorMessage" class="response-alert">{{errorMessage}}</h2>
+    <h2 *ngIf="successMessage" class="response-success">{{successMessage}}</h2>
+  </div>
 
   <div class="flex-container-column">
     <div class="flex-container-column">
-      <div *ngIf="firstName()?.invalid && (firstName()?.dirty || firstName()?.touched)">
+      <div
+        *ngIf="firstName()?.invalid && (firstName()?.dirty || firstName()?.touched) && !errorMessage && !successMessage">
         <div *ngIf="!firstNameValidationRequired()" class="text-alert">
           Acest camp este obligatoriu!
         </div>
@@ -17,7 +20,8 @@
     </div>
 
     <div class="flex-container-column">
-      <div *ngIf="lastName()?.invalid && (lastName()?.dirty || lastName()?.touched)">
+      <div
+        *ngIf="lastName()?.invalid && (lastName()?.dirty || lastName()?.touched) && !errorMessage && !successMessage">
         <div *ngIf="!lastNameValidationRequired()" class="text-alert">
           Acest camp este obligatoriu!
         </div>
@@ -30,7 +34,7 @@
     </div>
 
     <div class="flex-container-column">
-      <div *ngIf="email()?.invalid && (email()?.dirty || email()?.touched)">
+      <div *ngIf="email()?.invalid && (email()?.dirty || email()?.touched) && !errorMessage && !successMessage">
         <div *ngIf="!emailValidationRequired()" class="text-alert">
           Acest camp este obligatoriu!
         </div>
@@ -46,12 +50,13 @@
     </div>
 
     <div class="flex-container-column">
-      <div *ngIf="password()?.invalid && (password()?.dirty || password()?.touched)">
+      <div
+        *ngIf="password()?.invalid && (password()?.dirty || password()?.touched) && !errorMessage && !successMessage">
         <div *ngIf="!passwordValidationRequired()" class="text-alert">
           Acest camp este obligatoriu!
         </div>
-        <div *ngIf="!passwordValidationMinLength()" class="text-alert">
-          Parola trebuie sa contina cel putin 6 caractere!
+        <div *ngIf="!passwordValidationPattern()" class="text-alert">
+          Parola trebuie sa contina cel putin o majuscula, o litera mica, un simbol si minim 8 caractere.
         </div>
       </div>
 
@@ -61,6 +66,8 @@
       </div>
     </div>
 
-    <button type="submit" [disabled]="!registerForm.valid" [ngClass]="!registerForm.valid ? 'disabled-button' : ''">Inregistrare</button>
+    <button type="submit" [disabled]="!registerForm.valid" [ngClass]="!registerForm.valid ? 'disabled-button' : ''">
+      Inregistrare
+    </button>
   </div>
 </form>
