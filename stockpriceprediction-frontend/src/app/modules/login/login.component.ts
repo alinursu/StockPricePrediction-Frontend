@@ -42,6 +42,8 @@ export class LoginComponent implements OnInit {
       await this.router.navigate(['/']);
       // @ts-ignore
       this.cookieService.set('token', response.text);
+      // @ts-ignore
+      this.cookieService.set('name', response.name);
     } else {
       // @ts-ignore
       this.errorMessage = response.text;

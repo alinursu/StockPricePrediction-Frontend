@@ -1,7 +1,5 @@
 import {Injectable} from '@angular/core';
 import {LoginRequestDto} from "../models/LoginRequestDto";
-import * as fs from 'fs'
-import {decode} from 'ini-decode'
 import {RegisterRequestDto} from "../models/RegisterRequestDto";
 
 
@@ -13,8 +11,6 @@ export class UserService {
   private static readonly BACKEND_URL = "https://localhost:5001";
   private static readonly LOGIN_ENDPOINT = "/api/User/LoginUser";
   private static readonly REGISTER_ENDPOINT = "/api/User/RegisterUser";
-
-  private name: string = "";
 
   constructor() {
   }
@@ -40,9 +36,11 @@ export class UserService {
 
     let status = response.status;
     let text = "";
+    let name = "";
 
     if (response.ok) {
       text = JSON.parse(JSON.stringify(response.body))['token'];
+      name = JSON.parse(JSON.stringify(response.body))['name'];
     }
 
     if (response.status == 401) {
@@ -55,7 +53,8 @@ export class UserService {
 
     return {
       status: status,
-      text: text
+      text: text,
+      name: name
     };
   }
 
@@ -89,15 +88,5 @@ export class UserService {
       status: status,
       text: text
     };
-  }
-
-  // TODO: This is dummy implementation.
-  public logout() {
-    this.name = "";
-  }
-
-  // TODO: This is dummy implementation.
-  public getName(): string {
-    return this.name;
   }
 }

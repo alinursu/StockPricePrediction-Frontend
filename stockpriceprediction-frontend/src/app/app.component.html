@@ -1,6 +1,6 @@
 <header class="column">
   <div class="flex-container-row">
-    <div *ngIf="getUserName() != ''" class="flex-container-row" id="menu-container">
+    <div *ngIf="getUserName()" class="flex-container-row" id="menu-container">
       <button (click)="showSidebarMenu()" [innerHTML]="sidebarButtonText"></button>
 
       <div *ngIf="sidebarMenu" class="flex-container-column" id="sidebar-menu">
@@ -12,12 +12,12 @@
     </div>
 
     <h1><a href="/">StockDto Price Prediction</a></h1>
-    <div *ngIf="getUserName() == ''" class="flex-container-row">
+    <div *ngIf="!getUserName()" class="flex-container-row">
       <button class="header-button" onclick="location.href='/login'">Autentificare</button>
       <button class="header-button" onclick="location.href='/register'">Inregistrare</button>
     </div>
 
-    <div *ngIf="getUserName() != ''" class="flex-container-row" id="registered-header">
+    <div *ngIf="getUserName()" class="flex-container-row" id="registered-header">
 <!--      TODO: <img src="/assets/account-icon.png">-->
       <p>{{getUserName()}}</p>
       <button class="header-button" (click)="logoutEvent()">Logout</button>

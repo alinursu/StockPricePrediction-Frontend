@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {UserService} from "./services/user.service";
 import {Router} from "@angular/router";
 import {Title} from "@angular/platform-browser";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-root',
@@ -16,17 +17,18 @@ export class AppComponent {
 
   constructor(private userService: UserService,
               private router: Router,
-              private titleService: Title) {
+              private titleService: Title,
+              private cookieService: CookieService) {
     this.titleService.setTitle(this.title);
   }
 
-  // TODO: This is dummy implementation
-  public getUserName(): string {
-    return this.userService.getName();
+  public getUserName(): string | null {
+    return this.cookieService.get('name');
   }
 
   public logoutEvent() {
-    this.userService.logout(); // TODO: This is dummy implementation.
+    this.cookieService.delete('name');
+    this.cookieService.delete('token');
     this.router.navigate(["/"]);
   }
 

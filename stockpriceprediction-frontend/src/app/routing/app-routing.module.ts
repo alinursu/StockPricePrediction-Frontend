@@ -34,7 +34,6 @@ const routes: Routes = [
     pathMatch: 'full',
     component: NotFoundComponent
   }
-  // TODO: Add 404 page
   // TODO: Surpress user access if he is logged in or not
 ];
 
