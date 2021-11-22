@@ -1,0 +1,29 @@
+@import "../../../../styling/variables";
+
+* {
+  font-family: "Roboto Light", serif;
+  background-color: $white;
+  color: $black;
+}
+
+.flex-container-row {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.flex-container-column {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+div {
+  align-items: center;
+
+  a {
+    &:hover {
+      color: $colorOrange;
+    }
+  }
+}
