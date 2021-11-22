@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit} from '@angular/core';
 import {StockService} from "../../../services/stock.service";
-import {StockDto} from "../../../models/StockDto";
+import {StockDto} from "../../../models/dtos/StockDto";
 import {Router} from "@angular/router";
 import {CookieService} from "ngx-cookie-service";
 

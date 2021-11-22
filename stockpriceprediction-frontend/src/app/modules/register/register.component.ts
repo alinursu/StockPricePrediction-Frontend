@@ -42,7 +42,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {}
 
   public async registerSubmitted() {
-    let response = await this.userService.sendRegisterRequest(this.registerForm.value);
+    let response = await this.userService.handleRegisterRequest(this.registerForm.value);
 
     // @ts-ignore
     if (response.status == 200) {

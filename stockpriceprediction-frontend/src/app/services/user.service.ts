@@ -1,38 +1,22 @@
 import {Injectable} from '@angular/core';
-import {LoginRequestDto} from "../models/LoginRequestDto";
-import {RegisterRequestDto} from "../models/RegisterRequestDto";
+import {LoginRequestDto} from "../models/dtos/LoginRequestDto";
+import {RegisterRequestDto} from "../models/dtos/RegisterRequestDto";
+import {BackendClientAPI} from "../models/apis/BackendClientAPI";
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  // TODO: After deployment, change to the new ones;
-  private static readonly BACKEND_URL = "https://localhost:5001";
-  private static readonly LOGIN_ENDPOINT = "/api/User/LoginUser";
-  private static readonly REGISTER_ENDPOINT = "/api/User/RegisterUser";
+  private backendClientAPI: BackendClientAPI = new BackendClientAPI();
 
   constructor() {
   }
 
-  private static loginEndpoint(): string {
-    return `${this.BACKEND_URL}${this.LOGIN_ENDPOINT}`;
-  }
-
-  private static registerEndpoint(): string {
-    return `${this.BACKEND_URL}${this.REGISTER_ENDPOINT}`;
-  }
-
-  public async sendLoginRequest(userData: object): Promise<object> {
+  public async handleLoginRequest(userData: object): Promise<object> {
     // @ts-ignore
     const loginRequestDto: LoginRequestDto = new LoginRequestDto(userData.email, userData.password);
-    const response: Response = await fetch(UserService.loginEndpoint(), {
-      method: "POST",
-      body: JSON.stringify(loginRequestDto),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
+    const response: Response = await this.backendClientAPI.loginRequest(loginRequestDto);
 
     let status = response.status;
     let text = "";
@@ -58,16 +42,10 @@ export class UserService {
     };
   }
 
-  public async sendRegisterRequest(userData: object): Promise<object> {
+  public async handleRegisterRequest(userData: object): Promise<object> {
     // @ts-ignore
     const registerRequestDto: RegisterRequestDto = new RegisterRequestDto(userData.firstName, userData.lastName, userData.email, userData.password);
-    const response: Response = await fetch(UserService.registerEndpoint(), {
-      method: "POST",
-      body: JSON.stringify(registerRequestDto),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
+    const response: Response = await this.backendClientAPI.registerRequest(registerRequestDto);
 
     let status = response.status;
     let text = "";

@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
   }
 
   public async loginSubmitted() {
-    let response = await this.userService.sendLoginRequest(this.loginForm.value);
+    let response = await this.userService.handleLoginRequest(this.loginForm.value);
 
     // @ts-ignore
     if (response.status == 200) {
