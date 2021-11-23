@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {StockDto} from "../models/dtos/StockDto";
 
 @Injectable({
   providedIn: 'root'
 })
 export class StockService {
+  // TODO: This is dummy data.
   private _stocks: StockDto[] = [
     new StockDto("StockName1", "Abrv1", 124.35, 126.36),
     new StockDto("StockName2", "Abrv2", 34.35, 38.36),
@@ -20,7 +21,8 @@ export class StockService {
     new StockDto("StockName12", "Abrv12", 1234.35, 1200.36)
   ]
 
-  constructor() { }
+  constructor() {
+  }
 
   get stocks(): StockDto[] {
     return this._stocks;

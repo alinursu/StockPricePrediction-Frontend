@@ -7,6 +7,7 @@ import {CommonModule} from "@angular/common";
 import {RegisterModule} from "./modules/register/register.module";
 import { LoginModule } from './modules/login/login.module';
 import {CookieService} from "ngx-cookie-service";
+import {AllStocksModule} from "./modules/all-stocks/all-stocks.module";
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import {CookieService} from "ngx-cookie-service";
     CommonModule,
     AppRoutingModule,
     RegisterModule,
-    LoginModule
+    LoginModule,
+    AllStocksModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]
