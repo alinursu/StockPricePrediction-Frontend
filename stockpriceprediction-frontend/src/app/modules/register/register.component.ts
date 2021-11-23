@@ -13,7 +13,7 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   public errorMessage: string | null = null;
   public successMessage: string | null = null;
-  private requested: boolean = false;
+  private requested: number = 0;
 
   constructor(private userService: UserService,
               private formBuilder: FormBuilder,
@@ -27,15 +27,16 @@ export class RegisterComponent implements OnInit {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.pattern('^.*(?=.{8,})(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!*@#$%^&+=]).*$')]]
+      password: ['', [Validators.required, Validators.pattern('^.*(?=.{8,})(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!*@#$%^&+=]).*$')]],
+      confirmPassword: ['', [Validators.required, Validators.pattern('^.*(?=.{8,})(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!*@#$%^&+=]).*$')]]
     });
 
     this.registerForm.valueChanges.subscribe(value => {
-      if (!this.requested) {
+      if (this.requested <= 0) {
         this.errorMessage = null;
         this.successMessage = null;
       }
-      this.requested = false;
+      this.requested--;
     })
   }
 
@@ -43,11 +44,19 @@ export class RegisterComponent implements OnInit {
   }
 
   public async registerSubmitted() {
+    if(this.registerForm.value.password !== this.registerForm.value.confirmPassword) {
+      this.successMessage = null;
+      this.errorMessage = "Parolele introduse nu coincid!";
+      this.requested = 2;
+      this.registerForm.controls['password'].setValue('');
+      this.registerForm.controls['confirmPassword'].setValue('');
+      return;
+    }
+
     let response = await this.userService.handleRegisterRequest(this.registerForm.value);
 
     // @ts-ignore
     if (response.status == 201) {
-      console.log('x');
       // @ts-ignore
       this.successMessage = response.text;
       this.errorMessage = null;
@@ -56,8 +65,9 @@ export class RegisterComponent implements OnInit {
       this.errorMessage = response.text;
       this.successMessage = null;
     }
-    this.requested = true;
+    this.requested = 2;
     this.registerForm.controls['password'].setValue('');
+    this.registerForm.controls['confirmPassword'].setValue('');
   }
 
   public firstName(): AbstractControl | null {
@@ -98,5 +108,17 @@ export class RegisterComponent implements OnInit {
 
   public passwordValidationPattern(): boolean {
     return !this.password()?.errors?.['pattern'];
+  }
+
+  public confirmPassword(): AbstractControl | null {
+    return this.registerForm.get('confirmPassword');
+  }
+
+  public confirmPasswordValidationRequired(): boolean {
+    return !this.confirmPassword()?.errors?.['required'];
+  }
+
+  public confirmPasswordValidationPattern(): boolean {
+    return !this.confirmPassword()?.errors?.['pattern'];
   }
 }

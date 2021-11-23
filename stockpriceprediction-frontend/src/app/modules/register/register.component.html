@@ -66,6 +66,23 @@
       </div>
     </div>
 
+    <div class="flex-container-column">
+      <div
+        *ngIf="confirmPassword()?.invalid && (confirmPassword()?.dirty || confirmPassword()?.touched) && !errorMessage && !successMessage">
+        <div *ngIf="!confirmPasswordValidationRequired()" class="text-alert">
+          Acest camp este obligatoriu!
+        </div>
+        <div *ngIf="!confirmPasswordValidationPattern()" class="text-alert">
+          Parola trebuie sa contina cel putin o majuscula, o litera mica, un simbol si minim 8 caractere.
+        </div>
+      </div>
+
+      <div class="flex-container-row">
+        <label for="confirmPassword">Confirma parola:</label>
+        <input formControlName="confirmPassword" type="password" id="confirmPassword">
+      </div>
+    </div>
+
     <button type="submit" [disabled]="!registerForm.valid" [ngClass]="!registerForm.valid ? 'disabled-button' : ''">
       Inregistrare
     </button>
