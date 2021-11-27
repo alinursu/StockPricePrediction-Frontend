@@ -10,6 +10,7 @@ import {CookieService} from "ngx-cookie-service";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  // TODO: Maybe change the app title?
   title = 'Stock Price Prediction';
 
   public sidebarMenu: boolean = false;

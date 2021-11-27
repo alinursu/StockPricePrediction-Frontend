@@ -1,44 +1,38 @@
-<header class="column">
+<header class="flex-container-row">
   <div class="flex-container-row">
-    <div *ngIf="getUserName()" class="flex-container-row" id="menu-container">
-      <button (click)="showSidebarMenu()" [innerHTML]="sidebarButtonText"></button>
+    <h1 id="stock-arrow">&#8623;</h1>
+    <h1><a href="/">{{title}}</a></h1>
+  </div>
 
-      <div *ngIf="sidebarMenu" class="flex-container-column" id="sidebar-menu">
-        <button id="sidebar-menu_close-button" (click)="showSidebarMenu()">X</button>
-        <a href="/all-stocks">Toate stock-urile</a>
-        <div class="line"></div>
-        <a href="/favorite-stocks">Stock-uri urmarite</a>
-      </div>
-    </div>
+  <div *ngIf="!getUserName()" class="flex-container-row">
+    <button class="header-button" onclick="location.href='/login'">Autentificare</button>
+    <button class="header-button" onclick="location.href='/register'">Inregistrare</button>
+  </div>
 
-    <h1><a href="/">Stock Price Prediction</a></h1>
-    <div *ngIf="!getUserName()" class="flex-container-row">
-      <button class="header-button" onclick="location.href='/login'">Autentificare</button>
-      <button class="header-button" onclick="location.href='/register'">Inregistrare</button>
-    </div>
+  <div *ngIf="getUserName()" class="flex-container-row">
+    <a class="menu-item" href="/all-stocks">Toate stock-urile</a>
+    <a class="menu-item" href="/favorite-stocks">Stock-uri urmarite</a>
 
-    <div *ngIf="getUserName()" class="flex-container-row" id="registered-header">
-<!--      TODO: <img src="/assets/account-icon.png">-->
-      <p>{{getUserName()}}</p>
-      <button class="header-button" (click)="logoutEvent()">Logout</button>
-    </div>
+    <img src="/assets/profile-user.png" alt="">
+    <h2>{{getUserName()}}</h2>
+
+    <button class="header-button" (click)="logoutEvent()">Deautentificare</button>
   </div>
 </header>
 
 <router-outlet></router-outlet>
 
-<footer class="flex-container-column">
-  <div class="flex-container-row">
-    <div class="flex-container-column">
-      <p>Introducere in .NET</p>
-      <p>2021-2022</p>
-    </div>
+<footer class="flex-container-row">
+  <div class="flex-container-column">
+    <p>Introducere in .NET 2021-2022</p>
+    <a href="https://github.com/ursualin7890">Ursu Stefan-Alin</a>
+    <a href="https://github.com/LaurentiuMihai112">Mihai Cristian Laurentiu</a>
+    <a href="https://github.com/MarianIosub">Iosub Ovidiu Marian</a>
+    <a href="https://github.com/BogdanPuiu04">Puiu Bogdan Marian</a>
+  </div>
 
-    <div class="flex-container-column">
-      <p><a href="https://github.com/ursualin7890">Ursu Stefan-Alin</a></p>
-      <p><a href="https://github.com/LaurentiuMihai112">Mihai Cristian Laurentiu</a></p>
-      <p><a href="https://github.com/MarianIosub">Iosub Ovidiu Marian</a></p>
-      <p><a href="https://github.com/BogdanPuiu04">Puiu Bogdan Marian</a></p>
-    </div>
+  <div *ngIf="!getUserName()" class="flex-container-column" id="footer-authentication">
+    <button class="footer-button" onclick="location.href='/login'">Autentificare</button>
+    <button class="footer-button" onclick="location.href='/register'">Inregistrare</button>
   </div>
 </footer>
