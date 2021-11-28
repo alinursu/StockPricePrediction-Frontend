@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ComponentDisplayerService} from "../../services/component-displayer.service";
 
 @Component({
   selector: 'app-main-page',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private componentDisplayerService : ComponentDisplayerService) {
+    this.componentDisplayerService.displayHeaderAndFooter = true;
+  }
 
   ngOnInit(): void {
   }

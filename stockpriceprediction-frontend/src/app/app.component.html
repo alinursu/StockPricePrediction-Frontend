@@ -1,4 +1,4 @@
-<header class="flex-container-row">
+<header *ngIf="displayHeaderAndFooter()" class="flex-container-row">
   <div class="flex-container-row">
     <h1 id="stock-arrow">&#8623;</h1>
     <h1><a href="/">{{title}}</a></h1>
@@ -22,7 +22,7 @@
 
 <router-outlet></router-outlet>
 
-<footer class="flex-container-row">
+<footer *ngIf="displayHeaderAndFooter()" class="flex-container-row">
   <div class="flex-container-column">
     <p>Introducere in .NET 2021-2022</p>
     <a href="https://github.com/ursualin7890">Ursu Stefan-Alin</a>

@@ -15,7 +15,16 @@ export class UserService {
   public async handleLoginRequest(userData: object): Promise<object> {
     // @ts-ignore
     const loginRequestDto: LoginRequestDto = new LoginRequestDto(userData.email, userData.password);
-    const response: Response = await this.backendClientAPI.loginRequest(loginRequestDto);
+    let response: Response;
+    try {
+      response = await this.backendClientAPI.loginRequest(loginRequestDto);
+    }
+    catch(e) {
+      return {
+        status: 500,
+        text: "Eroare: Server-ul nu este disponibil momentan!"
+      }
+    }
 
     let status = response.status;
     const responseBody = await response.json();
@@ -28,11 +37,11 @@ export class UserService {
     }
 
     if (response.status == 401) {
-      text = "Adresa de email sau parola este gresita!";
+      text = "Eroare: Adresa de email sau parola este gresita!";
     }
 
     if (response.status == 500 || response.status == 404) {
-      text = "A aparut o eroare!";
+      text = "Eroare: Server-ul nu este disponibil momentan!";
     }
 
     return {

@@ -3,6 +3,7 @@ import {UserService} from "./services/user.service";
 import {Router} from "@angular/router";
 import {Title} from "@angular/platform-browser";
 import {CookieService} from "ngx-cookie-service";
+import {ComponentDisplayerService} from "./services/component-displayer.service";
 
 @Component({
   selector: 'app-root',
@@ -17,6 +18,7 @@ export class AppComponent {
   public sidebarButtonText: string = "&#8594;";
 
   constructor(private userService: UserService,
+              private componentDisplayerService: ComponentDisplayerService,
               private router: Router,
               private titleService: Title,
               private cookieService: CookieService) {
@@ -33,14 +35,7 @@ export class AppComponent {
     this.router.navigate(["/"]);
   }
 
-  public showSidebarMenu() {
-    this.sidebarMenu = !this.sidebarMenu;
-
-    if(this.sidebarMenu) {
-      this.sidebarButtonText = "&#8592;";
-    }
-    else {
-      this.sidebarButtonText = "&#8594;";
-    }
+  public displayHeaderAndFooter(): boolean {
+    return this.componentDisplayerService.displayHeaderAndFooter;
   }
 }

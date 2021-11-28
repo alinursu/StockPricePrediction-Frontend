@@ -3,6 +3,7 @@ import {UserService} from "../../services/user.service";
 import {Router} from "@angular/router";
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CookieService} from "ngx-cookie-service";
+import {ComponentDisplayerService} from "../../services/component-displayer.service";
 
 @Component({
   selector: 'app-login',
@@ -15,9 +16,12 @@ export class LoginComponent implements OnInit {
   private requested: boolean = false;
 
   constructor(private userService: UserService,
+              private componentDisplayerService : ComponentDisplayerService,
               private router: Router,
               private formBuilder: FormBuilder,
               private cookieService: CookieService) {
+    this.componentDisplayerService.displayHeaderAndFooter = false;
+
     if(this.cookieService.get('token') != '') {
       this.router.navigate(['/forbidden'])
     }
@@ -74,5 +78,9 @@ export class LoginComponent implements OnInit {
 
   public passwordValidationRequired(): boolean {
     return !this.password()?.errors?.['required'];
+  }
+
+  getBackgroundImageUrl(): string {
+    return "url('/assets/stock-background-image2.png')"
   }
 }
