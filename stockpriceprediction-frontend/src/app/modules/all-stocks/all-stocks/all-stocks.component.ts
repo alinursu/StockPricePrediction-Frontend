@@ -3,6 +3,7 @@ import {StockService} from "../../../services/stock.service";
 import {StockDto} from "../../../models/dtos/StockDto";
 import {Router} from "@angular/router";
 import {CookieService} from "ngx-cookie-service";
+import {ComponentDisplayerService} from "../../../services/component-displayer.service";
 
 @Component({
   selector: 'app-all-stocks',
@@ -17,8 +18,11 @@ export class AllStocksComponent implements OnInit {
 
   constructor(private htmlDocument: ElementRef,
               private stockService: StockService,
+              private componentDisplayerService: ComponentDisplayerService,
               private router: Router,
               private cookieService: CookieService) {
+    this.componentDisplayerService.displayHeaderAndFooter = true;
+
     if (this.cookieService.get('token') == '') {
       this.router.navigate(['/forbidden'])
     }
@@ -31,24 +35,27 @@ export class AllStocksComponent implements OnInit {
 
   public displayDropDown(index: number) {
     let stockParentContainers = this.htmlDocument.nativeElement.querySelectorAll(".stock-container");
-    let stockParentContainer = stockParentContainers[index]
+    let stockParentContainer = stockParentContainers[index] // .stock-container
 
-    let stockContainer = stockParentContainer.children[0];
-    let stockDropdownContainer = stockParentContainer.children[1];
+    let stockContainer = stockParentContainer.children[0]; // .stock
+    let stockDropdownContainer = stockParentContainer.children[1]; // .stock-dropdown
     if (stockDropdownContainer.classList.contains("stock-dropdown-hidden")) {
+      stockContainer.classList.add("stock-nohover");
+
       stockDropdownContainer.classList.remove("stock-dropdown-hidden");
       stockContainer.style["margin-bottom"] = "0";
 
-      let arrowButton = stockContainer.children[2].children[1].children[0];
+      let arrowButton = stockContainer.children[2].children[1].children[0]; // . arrow
       arrowButton.style["-webkit-transform"] = "rotate(225deg)";
       arrowButton.style["-moz-transform"] = "rotate(225deg)";
       arrowButton.style["-o-transform"] = "rotate(225deg)";
       arrowButton.style["transform"] = "rotate(225deg)";
     } else {
-      stockDropdownContainer.classList.add("stock-dropdown-hidden");
-      stockContainer.style["margin-bottom"] = "1.5em";
+      stockContainer.classList.remove("stock-nohover");
 
-      let arrowButton = stockContainer.children[2].children[1].children[0];
+      stockDropdownContainer.classList.add("stock-dropdown-hidden");
+
+      let arrowButton = stockContainer.children[2].children[1].children[0]; // .arrow
       arrowButton.style["-webkit-transform"] = "rotate(45deg)";
       arrowButton.style["-moz-transform"] = "rotate(45deg)";
       arrowButton.style["-o-transform"] = "rotate(45deg)";

@@ -1,18 +1,18 @@
 <div id="searchBar" class="flex-container-column">
-  <form method="get" action="/all-stocks" class="flex-container-row">
+  <div class="flex-container-row">
     <input type="text" id="search" name="search" placeholder="Cauta..." (input)="onSearchBarChange($event)"/>
-    <button type="submit">&#x26B2;</button>
-  </form>
+    <button type="button">&#x26B2;</button>
+  </div>
 </div>
 
-<div id="stocks" class="flex-container-column">
-  <div *ngFor="let stock of getActualStocks()" class="stock-container flex-container-column">
+<div id="stocks" class="flex-container-row">
+  <div *ngFor="let stock of getActualStocks(); let i = index" class="stock-container flex-container-column">
     <div class="stock flex-container-row">
       <h2>{{stock.name}} ({{stock.abbreviation}})</h2>
-      <button (click)="markAsFavorite(0)">&#9733;</button>
+      <button (click)="markAsFavorite(i)">&#9733;</button>
       <div class="flex-container-row">
         <h3>{{stock.actualValue}}$</h3>
-        <button (click)="displayDropDown(0)"><i class="arrow down"></i></button>
+        <button (click)="displayDropDown(i)"><i class="arrow down"></i></button>
       </div>
     </div>
 
@@ -35,10 +35,9 @@
   <div id="pagination" class="flex-container-row">
     <a (click)="decrementStocksIndex()" [ngClass]="getStocksIndex() == 0 ? 'disabled' : ''">&laquo;</a>
     <a *ngFor="let number of getStocksPages()" (click)="updateStockIndexValue(number)"
-     [ngClass]="getStocksIndex() == number ? 'selected' : ''">
+       [ngClass]="getStocksIndex() == number ? 'selected' : ''">
       {{number + 1}}
     </a>
     <a (click)="incrementStocksIndex()" [ngClass]="getStocksIndex() == getNumberOfPages() - 1 ? 'disabled' : ''">&raquo;</a>
   </div>
 </div>
-

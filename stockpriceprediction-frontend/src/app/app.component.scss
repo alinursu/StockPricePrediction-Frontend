@@ -36,7 +36,7 @@ header {
     }
   }
 
-  h1 > a{
+  h1 > a {
     text-shadow: 1px 1px 2px $black;
 
     &:hover {
@@ -99,6 +99,15 @@ header {
 
       &:hover {
         border-color: $white;
+        text-shadow: 2px 2px 4px $black;
+      }
+    }
+
+    #username {
+      text-shadow: 1px 1px 2px $black;
+      cursor: default;
+
+      &:hover {
         text-shadow: 2px 2px 4px $black;
       }
     }
