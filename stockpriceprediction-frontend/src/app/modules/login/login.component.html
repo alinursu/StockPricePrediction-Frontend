@@ -1,7 +1,8 @@
 <div style="width: 100%; height: 100%">
   <div id="background" class="flex-container-column" [ngStyle]="{'background-image': getBackgroundImageUrl()}">
-    <div id="button-back-container">
-      <button type="button" id="button-back" onclick="location.href='/'">&#8592;</button>
+    <div id="navigation-container" class="flex-container-row">
+      <button type="button" id="button-back" onclick="location.href='/'">&#8592; Pagina principala</button>
+      <button type="button" id="button-register" onclick="location.href='/register'">&#8594; Inregistrare</button>
     </div>
 
     <form [formGroup]="loginForm" (ngSubmit)="loginSubmitted()" class="flex-container-column">

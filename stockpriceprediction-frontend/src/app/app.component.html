@@ -6,7 +6,6 @@
 
   <div *ngIf="!getUserName()" class="flex-container-row">
     <button class="header-button" onclick="location.href='/login'">Autentificare</button>
-    <button class="header-button" onclick="location.href='/register'">Inregistrare</button>
   </div>
 
   <div *ngIf="getUserName()" class="flex-container-row">
@@ -34,5 +33,9 @@
   <div *ngIf="!getUserName()" class="flex-container-column" id="footer-authentication">
     <button class="footer-button" onclick="location.href='/login'">Autentificare</button>
     <button class="footer-button" onclick="location.href='/register'">Inregistrare</button>
+  </div>
+
+  <div *ngIf="getUserName()" class="flex-container-column" id="footer-deauthentication">
+    <button class="footer-button" (click)="logoutEvent()">Deautentificare</button>
   </div>
 </footer>

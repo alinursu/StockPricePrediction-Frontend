@@ -20,6 +20,7 @@ export class UserService {
       response = await this.backendClientAPI.loginRequest(loginRequestDto);
     }
     catch(e) {
+      console.log(e)
       return {
         status: 500,
         text: "Eroare: Server-ul nu este disponibil momentan!"
@@ -54,7 +55,16 @@ export class UserService {
   public async handleRegisterRequest(userData: object): Promise<object> {
     // @ts-ignore
     const registerRequestDto: RegisterRequestDto = new RegisterRequestDto(userData.firstName, userData.lastName, userData.email, userData.password);
-    const response: Response = await this.backendClientAPI.registerRequest(registerRequestDto);
+    let response: Response;
+    try {
+      response = await this.backendClientAPI.registerRequest(registerRequestDto);
+    }
+    catch(e) {
+      return {
+        status: 500,
+        text: "Eroare: Server-ul nu este disponibil momentan!"
+      }
+    }
 
     let status = response.status;
     let text = "";
@@ -65,11 +75,11 @@ export class UserService {
 
     // TODO: Change it to 409 Conflict ?
     if (response.status == 400) {
-      text = "Adresa de email este asociata unui cont existent!";
+      text = "Eroare: Adresa de email este asociata unui cont existent!";
     }
 
     if (response.status == 500 || response.status == 404) {
-      text = "A aparut o eroare!";
+      text = "Eroare: Server-ul nu este disponibil momentan!";
     }
 
     return {

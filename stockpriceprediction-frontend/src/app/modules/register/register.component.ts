@@ -3,6 +3,7 @@ import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/form
 import {UserService} from "../../services/user.service";
 import {Router} from "@angular/router";
 import {CookieService} from "ngx-cookie-service";
+import {ComponentDisplayerService} from "../../services/component-displayer.service";
 
 @Component({
   selector: 'app-register',
@@ -16,9 +17,12 @@ export class RegisterComponent implements OnInit {
   private requested: number = 0;
 
   constructor(private userService: UserService,
+              private componentDisplayerService: ComponentDisplayerService,
               private formBuilder: FormBuilder,
               private router: Router,
               private cookieService: CookieService) {
+    this.componentDisplayerService.displayHeaderAndFooter = false;
+
     if (this.cookieService.get('token') != '') {
       this.router.navigate(['/forbidden'])
     }
@@ -46,7 +50,7 @@ export class RegisterComponent implements OnInit {
   public async registerSubmitted() {
     if(this.registerForm.value.password !== this.registerForm.value.confirmPassword) {
       this.successMessage = null;
-      this.errorMessage = "Parolele introduse nu coincid!";
+      this.errorMessage = "Eroare: Parolele introduse nu coincid!";
       this.requested = 2;
       this.registerForm.controls['password'].setValue('');
       this.registerForm.controls['confirmPassword'].setValue('');
@@ -120,5 +124,9 @@ export class RegisterComponent implements OnInit {
 
   public confirmPasswordValidationPattern(): boolean {
     return !this.confirmPassword()?.errors?.['pattern'];
+  }
+
+  getBackgroundImageUrl(): string {
+    return "url('/assets/stock-background-image2.png')"
   }
 }
