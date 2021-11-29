@@ -6,27 +6,16 @@
 </div>
 
 <div id="stocks" class="flex-container-row">
-  <div *ngFor="let stock of getActualStocks(); let i = index" class="stock-container flex-container-column">
-    <div class="stock flex-container-row">
-      <h2>{{stock.name}} ({{stock.abbreviation}})</h2>
-      <button (click)="markAsFavorite(i)">&#9733;</button>
-      <div class="flex-container-row">
-        <h3>{{stock.actualValue}}$</h3>
-        <button (click)="displayDropDown(i)"><i class="arrow down"></i></button>
-      </div>
+  <div *ngFor="let stock of getActualStocks(); let i = index" class="stock-container flex-container-column" (click)="redirectToStockPage(stock)">
+    <div class="flex-container-row">
+      <h2>{{stock.name}}</h2>
+      <h3>{{stock.abbreviation}}</h3>
     </div>
 
-    <div class="stock-dropdown stock-dropdown-hidden flex-container-column">
-      <div class="line"></div>
-
-      <img src="/assets/dummy-price-graph.jpg" alt="">
-      <p>Valoarea actuala: <b>{{stock.actualValue}}$</b></p>
-      <p>Valoarea prezisa pentru maine: <b>{{stock.predictedValue}}$</b></p>
-      <p class="price-raised">&#8599; Crestere preconizata de 1.58%</p>  <!--      TODO: This is hardcoded-->
-
-      <div class="line"></div>
-
-      <a href="#">Vreau sa vad ce cred ceilalti utilizatori</a>
+    <div class="flex-container-column">
+      <p>Pretul actual pentru un stock: <b>{{stock.actualValue}}$</b></p>
+      <p>Pretul prezis pentru {{getTomorrowDateAsString()}}: <b>{{stock.predictedValue}}$</b></p>
+      <p class="price-increased">&#8599; Crestere preconizata de 1.58%</p> <!-- TODO: This is hardcoded-->
     </div>
   </div>
 </div>

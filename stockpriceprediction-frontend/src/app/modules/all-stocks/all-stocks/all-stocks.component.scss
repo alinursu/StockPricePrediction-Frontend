@@ -66,137 +66,62 @@
 
   > .stock-container {
     margin: 0 3em 2em 0;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
     flex-grow: 1;
-    width: 35%;
+    width: 20%;
+    border: 2px solid $black;
+    border-radius: 15px;
+    box-shadow: 2px 2px 4px $black;
+    background-color: $darkBlue;
+    opacity: 0.8;
+    cursor: pointer;
 
-    > .stock {
+    &:hover {
+      box-shadow: 4px 4px 8px $black;
+      transform: scale(1.025);
+      transition: 0.2s;
+    }
+
+    * {
+      background: none;
+    }
+
+    > div.flex-container-row {
       align-items: center;
-      border: 2px solid $black;
-      border-radius: 10px;
-      padding: 0 1em;
-      box-shadow: 2px 2px 4px $black;
 
-      &:hover {
-        border-color: $orange;
-        box-shadow: 4px 4px 8px $black;
-        transition: 0.2s;
-      }
-
-      h2 {
-        color: $orange;
-      }
-
-      button {
-        border: none;
-      }
-
-      > button {
-        cursor: pointer;
-        font-size: 24px;
+      h2, h3 {
         color: $black;
-
-        &:hover {
-          color: $orange;
-          text-shadow: 1px 1px 2px $black;
-          transition: 0.1s;
-        }
+        text-shadow: 1px 1px 1px $black;
       }
 
-      > div {
-        align-items: center;
+      h3 {
         margin-left: auto;
-
-        h3 {
-          margin-right: 0.5em;
-        }
-
-        > button {
-          border: none;
-
-          .arrow {
-            cursor: pointer;
-            border: solid $black;
-            border-width: 0 3px 3px 0;
-            display: inline-block;
-            padding: 3px;
-
-            &:hover {
-              border-color: $orange;
-              transition: 0.1s;
-            }
-          }
-
-          .down {
-            transform: rotate(45deg);
-            -webkit-transform: rotate(45deg);
-          }
-        }
       }
     }
 
-    > .stock-nohover {
-      &:hover {
-        border-color: $black;
-        box-shadow: 2px 2px 4px $black;
-        transition: 0s;
-      }
-    }
-
-    .stock-dropdown {
-      border: 2px solid $black;
-      box-shadow: 2px 5px 4px $black;
-      border-top: none;
-      border-bottom-left-radius: 10px;
-      border-bottom-right-radius: 10px;
-      position: relative;
-      top: -0.7em;
-      align-items: center;
-
-      .line {
-        background-color: $black;
-        border: 1px solid $black;
-        border-radius: 10px;
-        width: 80%;
-        margin: 1em 0;
-      }
-
-      p {
-        font-size: 18px;
-        margin: 0.5em 0;
-
-        &.price-raised {
-          color: green;
-          font-weight: bold;
-        }
-
-        &.price-reduced {
-          color: red;
-          font-weight: bold;
-        }
-      }
-
-      a {
-        margin-bottom: 1em;
-        text-decoration: none;
-        font-size: 16px;
-        border: 1px solid $orange;
-        padding: 0.3em;
-        border-radius: 5px;
-        background-color: $orange;
-        box-shadow: 1px 1px 2px $black;
+    > div.flex-container-column {
+      > p {
         color: $white;
+        margin-bottom: 0.2em;
+        font-size: 17px;
 
-        &:hover {
-          border-color: $darkBlue;
-          background-color: $darkBlue;
-          box-shadow: 2px 2px 4px $black;
-          transition: 0.2s;
+        > b {
+          color: $white;
         }
       }
-    }
 
-    > .stock-dropdown-hidden {
-      display: none;
+      > p.price-increased {
+        margin-top: 1em;
+        color: green;
+        font-weight: bold;
+      }
+
+      > p.price-decreased {
+        margin-top: 1em;
+        color: red;
+        font-weight: bold;
+      }
     }
   }
 }

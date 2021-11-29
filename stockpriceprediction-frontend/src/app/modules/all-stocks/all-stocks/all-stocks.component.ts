@@ -4,6 +4,7 @@ import {StockDto} from "../../../models/dtos/StockDto";
 import {Router} from "@angular/router";
 import {CookieService} from "ngx-cookie-service";
 import {ComponentDisplayerService} from "../../../services/component-displayer.service";
+import {formatDate} from "@angular/common";
 
 @Component({
   selector: 'app-all-stocks',
@@ -45,7 +46,7 @@ export class AllStocksComponent implements OnInit {
       stockDropdownContainer.classList.remove("stock-dropdown-hidden");
       stockContainer.style["margin-bottom"] = "0";
 
-      let arrowButton = stockContainer.children[2].children[1].children[0]; // . arrow
+      let arrowButton = stockContainer.children[2].children[1].children[0]; // .arrow
       arrowButton.style["-webkit-transform"] = "rotate(225deg)";
       arrowButton.style["-moz-transform"] = "rotate(225deg)";
       arrowButton.style["-o-transform"] = "rotate(225deg)";
@@ -135,5 +136,13 @@ export class AllStocksComponent implements OnInit {
       this.updateActualStocks();
       this.filtered = false;
     }
+  }
+
+  getTomorrowDateAsString(): string {
+    return formatDate(new Date(), 'dd/MM/yyyy', 'en');
+  }
+
+  redirectToStockPage(stock: StockDto) {
+    this.router.navigate(['/stock']);
   }
 }

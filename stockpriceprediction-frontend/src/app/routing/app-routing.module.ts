@@ -6,6 +6,7 @@ import {RegisterComponent} from "../modules/register/register.component";
 import {AllStocksComponent} from "../modules/all-stocks/all-stocks/all-stocks.component";
 import {NotFoundComponent} from "../modules/not-found/not-found/not-found.component";
 import {ForbiddenComponent} from "../modules/forbidden/forbidden/forbidden.component";
+import {StockComponent} from "../modules/stock/stock/stock.component";
 
 const routes: Routes = [
   {
@@ -19,6 +20,10 @@ const routes: Routes = [
   {
     path: 'all-stocks',
     component: AllStocksComponent
+  },
+  {
+    path: 'stock',
+    component: StockComponent
   },
   {
     path: 'favorite-stocks',
