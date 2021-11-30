@@ -8,6 +8,7 @@ import {RegisterModule} from "./modules/register/register.module";
 import { LoginModule } from './modules/login/login.module';
 import {CookieService} from "ngx-cookie-service";
 import {AllStocksModule} from "./modules/all-stocks/all-stocks.module";
+import {StockModule} from "./modules/stock/stock.module";
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {AllStocksModule} from "./modules/all-stocks/all-stocks.module";
     AppRoutingModule,
     RegisterModule,
     LoginModule,
-    AllStocksModule
+    AllStocksModule,
+    StockModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]

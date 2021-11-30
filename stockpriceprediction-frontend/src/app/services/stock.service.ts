@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {StockDto} from "../models/dtos/StockDto";
+import {CommentDto} from "../models/dtos/CommentDto";
 
 @Injectable({
   providedIn: 'root'
@@ -21,10 +22,24 @@ export class StockService {
     new StockDto("StockName12", "Abrv12", 1234.35, 1200.36)
   ]
 
+  private _comments: CommentDto[] = [
+    new CommentDto("Abrv", "John Doe", "29/11/2021", "Cool prediction", 2, 1),
+    new CommentDto("Abrv", "Jane Doe", "28/11/2021", "Not so cool prediction", 10, 1),
+    new CommentDto("Abrv", "John Doe", "27/11/2021", "I don't know what is going on here", 1, 10),
+    new CommentDto("Abrv", "Matt Hone", "26/11/2021", "Comments works!", 100, 1),
+    new CommentDto("Abrv", "Unknown Man", "25/11/2021", "Cool prediction", 0, 0),
+    new CommentDto("Abrv", "Unknown Man", "24/11/2021", "Test1", 0, 0),
+    new CommentDto("Abrv", "Unknown Man", "23/11/2021", "Test2", 0, 0)
+  ]
+
   constructor() {
   }
 
   get stocks(): StockDto[] {
     return this._stocks;
+  }
+
+  get comments(): CommentDto[] {
+    return this._comments;
   }
 }

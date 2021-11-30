@@ -43,6 +43,8 @@ export class LoginComponent implements OnInit {
   }
 
   public async loginSubmitted() {
+    // TODO: After pressing button, request takes about 1-2seconds. Add a loading gif
+
     let response = await this.userService.handleLoginRequest(this.loginForm.value);
 
     // @ts-ignore

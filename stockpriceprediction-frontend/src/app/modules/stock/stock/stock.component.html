@@ -1,1 +1,74 @@
-<p>stock works!</p>
+<!--TODO: This is mocked data.-->
+<!--  TODO: Create angular route with stock abbreviation as url parameter -->
+
+<div id="container" class="flex-container-column">
+  <h1>Dow Jones Industrial Average</h1>
+  <h2>INDU:IND</h2>
+
+  <!--TODO: More informations can be scrapped on backend from https://www.bloomberg.com/quote/INDU:IND-->
+  <p id="stock-description">The Dow Jones Industrial Average is a price-weighted average of 30 blue-chip stocks that are
+    generally the leaders in their industry. It has been a widely followed indicator of the stock market since October
+    1, 1928.</p>
+  <div class="flex-container-row">
+    <div class="flex-container-column">
+      <h3>Fluctuatia pretului in ultimele 30 de zile</h3>
+      <img src="/assets/dummy-price-graph.jpg" alt="">
+    </div>
+
+    <div class="flex-container-column">
+      <h3>Prezicerea pretului in urmatoarele 7 zile</h3>
+      <img src="/assets/dummy-price-graph.jpg" alt="">
+    </div>
+  </div>
+
+  <div id="comments-container">
+    <h2>5 Comentarii</h2>
+
+    <div class="flex-container-row">
+      <div class="flex-container-row">
+        <img src="/assets/profile-user.png" alt="">
+
+        <form [formGroup]="commentForm" (ngSubmit)="insertComment()" id="user-comment" class="flex-container-column">
+          <div *ngIf="commentText()?.invalid && (commentText()?.dirty || commentText()?.touched)">
+            <div *ngIf="!commentTextValidationRequired()" class="text-alert">
+              Acest camp este obligatoriu!
+            </div>
+          </div>
+
+          <textarea formControlName="text" id="text" placeholder="..." rows="3"></textarea>
+          <button type="submit" [disabled]="!commentForm.valid" [ngClass]="!commentForm.valid ? 'disabled-button' : ''">
+            Adauga comentariul
+          </button>
+        </form>
+      </div>
+
+      <div *ngIf="getComments().length == 0" class="flex-container-column" id="no-comments-container">
+        <h3>Fii primul care lasa o parere!</h3>
+      </div>
+
+      <div class="flex-container-column">
+        <div *ngFor="let comment of getVisibleComments()" class="comment flex-container-column">
+          <div class="flex-container-row">
+            <img src="/assets/profile-user.png" alt="">
+            <p class="comment-name">{{comment.userName}}</p>
+            <p class="comment-date">{{comment.datePublished}}</p>
+          </div>
+
+          <p class="comment-text">{{comment.text}}</p>
+
+          <!--        TODO: Make them work-->
+          <div class="flex-container-row">
+            <button type="button" class="comment-likes">{{comment.likes}} Likes</button>
+            <button type="button" class="comment-dislikes">{{comment.dislikes}} Dislikes</button>
+          </div>
+        </div>
+
+        <button *ngIf="numberOfVisibleStocks < getComments().length" type="button" id="show-more-comments-button"
+                (click)="increaseNumberOfVisibleComments()">
+          Arata mai multe comentarii
+        </button>
+      </div>
+    </div>
+  </div>
+  <!--  Comentarii-->
+</div>
