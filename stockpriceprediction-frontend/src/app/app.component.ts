@@ -14,9 +14,6 @@ export class AppComponent {
   // TODO: Maybe change the app title?
   title = 'Stock Price Prediction';
 
-  public sidebarMenu: boolean = false;
-  public sidebarButtonText: string = "&#8594;";
-
   constructor(private userService: UserService,
               private componentDisplayerService: ComponentDisplayerService,
               private router: Router,
@@ -37,5 +34,17 @@ export class AppComponent {
 
   public displayHeaderAndFooter(): boolean {
     return this.componentDisplayerService.displayHeaderAndFooter;
+  }
+
+  public highlightAllStocksMenuItem(): boolean {
+    return this.componentDisplayerService.allStocksMenuItemHighlighted;
+  }
+
+  public highlightFavoriteStocksMenuItem(): boolean {
+    return this.componentDisplayerService.favoriteStocksMenuItemHighlighted;
+  }
+
+  getBackgroundImageUrl(): string {
+    return `url('/assets/stock-background-image.jpeg')`
   }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ComponentDisplayerService} from "../../../services/component-displayer.service";
 
 @Component({
   selector: 'app-not-found',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NotFoundComponent implements OnInit {
 
-  constructor() { }
+  constructor(private componentDisplayerService : ComponentDisplayerService) {
+    this.componentDisplayerService.displayHeaderAndFooter = true;
+    this.componentDisplayerService.allStocksMenuItemHighlighted = false;
+    this.componentDisplayerService.favoriteStocksMenuItemHighlighted = false;
+  }
 
   ngOnInit(): void {
   }

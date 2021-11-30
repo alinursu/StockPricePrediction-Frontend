@@ -21,6 +21,8 @@ export class StockComponent implements OnInit {
               private formBuilder: FormBuilder,
               private cookieService: CookieService) {
     this.componentDisplayerService.displayHeaderAndFooter = true;
+    this.componentDisplayerService.allStocksMenuItemHighlighted = false;
+    this.componentDisplayerService.favoriteStocksMenuItemHighlighted = false;
 
     if(this.cookieService.get('token') == '') {
       this.router.navigate(['/forbidden'])

@@ -5,6 +5,8 @@ import { Injectable } from '@angular/core';
 })
 export class ComponentDisplayerService {
   public displayHeaderAndFooter: boolean = true;
+  public allStocksMenuItemHighlighted: boolean = false;
+  public favoriteStocksMenuItemHighlighted: boolean = false;
 
   constructor() { }
 }

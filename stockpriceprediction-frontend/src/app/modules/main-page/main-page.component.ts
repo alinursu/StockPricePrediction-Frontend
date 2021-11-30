@@ -10,6 +10,8 @@ export class MainPageComponent implements OnInit {
 
   constructor(private componentDisplayerService : ComponentDisplayerService) {
     this.componentDisplayerService.displayHeaderAndFooter = true;
+    this.componentDisplayerService.allStocksMenuItemHighlighted = false;
+    this.componentDisplayerService.favoriteStocksMenuItemHighlighted = false;
   }
 
   ngOnInit(): void {

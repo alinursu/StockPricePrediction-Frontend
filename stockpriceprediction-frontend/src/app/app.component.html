@@ -1,21 +1,31 @@
-<header *ngIf="displayHeaderAndFooter()" class="flex-container-row">
-  <div class="flex-container-row">
-    <h1 id="stock-arrow">&#8623;</h1>
-    <h1><a href="/">{{title}}</a></h1>
-  </div>
+<header *ngIf="displayHeaderAndFooter()" [ngStyle]="{'background-image':getBackgroundImageUrl()}"
+        class="flex-container-column">
+  <h1 id="title"><a href="/">{{title}}</a></h1>
 
   <div *ngIf="!getUserName()" class="flex-container-row">
-    <button class="header-button" onclick="location.href='/login'">Autentificare</button>
+    <button id="login-button" onclick="location.href='/login'">Autentificare</button>
+    <button id="register-button" onclick="location.href='/register'">Inregistrare</button>
   </div>
 
-  <div *ngIf="getUserName()" class="flex-container-row">
-    <a class="menu-item" href="/all-stocks">Toate stock-urile</a>
-    <a class="menu-item" href="/favorite-stocks">Stock-uri urmarite</a>
+  <div *ngIf="getUserName()" class="flex-container-column">
+    <div class="flex-container-row">
+      <a class="menu-item" href="/all-stocks" [ngClass]="highlightAllStocksMenuItem() ? 'highlighted-menu-item' : ''">
+        Toate stock-urile
+      </a>
+      <a class="menu-item" href="/favorite-stocks"
+         [ngClass]="highlightFavoriteStocksMenuItem() ? 'highlighted-menu-item' : ''">
+        Stock-uri urmarite
+      </a>
+    </div>
 
-    <img src="/assets/profile-user.png" alt="">
-    <h2 id="username">{{getUserName()}}</h2>
+    <div class="flex-container-column" id="logged-user-container">
+      <div class="flex-container-row">
+        <img src="/assets/profile-user.png" alt="" id="profile-image">
+        <h2 id="username">{{getUserName()}}</h2>
+      </div>
 
-    <button class="header-button" (click)="logoutEvent()">Deautentificare</button>
+      <button id="logout-button" (click)="logoutEvent()">Deautentificare</button>
+    </div>
   </div>
 </header>
 
