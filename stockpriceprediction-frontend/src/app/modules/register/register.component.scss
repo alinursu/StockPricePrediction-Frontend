@@ -84,7 +84,6 @@
     }
 
     > div.flex-container-column > div.flex-container-column {
-      align-items: center;
       margin-bottom: 1.2em;
     }
 
@@ -93,6 +92,7 @@
       color: $white;
       margin-right: 0.5em;
       text-shadow: 2px 2px 4px $black;
+      margin-left: auto;
     }
 
     input {
@@ -104,6 +104,7 @@
       border-radius: 5px;
       box-shadow: 2px 2px 4px $black;
       width: 15em;
+      background-color: $darkBlue;
 
       &:hover {
         border-color: $white;
