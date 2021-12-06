@@ -21,14 +21,14 @@ export class StockService {
 
     let response: Response = await this.backendClientAPI.getAllStocks(this.cookieService.get('token'));
     if (response.status !== 200) {
-      return [new StockDto("error", "error", 0, 0, [], false)];
+      return [new StockDto("error", "error",  [], false)];
     }
 
     const responseBody = await response.json();
     this._stocks = []
     for (let index in responseBody) {
       let stock = responseBody[index]
-      let stockDto: StockDto = new StockDto(stock['title'], stock['symbol'], 0, 0, [], false);
+      let stockDto: StockDto = new StockDto(stock['title'], stock['symbol'],  [], false);
       this._stocks.push(stockDto);
     }
     return this._stocks
@@ -41,19 +41,19 @@ export class StockService {
 
     let response: Response = await this.backendClientAPI.getFavoriteStocks(this.cookieService.get('token'));
     if (response.status !== 200) {
-      return [new StockDto("error", "error", 0, 0, [], false)];
+      return [new StockDto("error", "error", [], false)];
     }
 
     const responseBody = await response.json();
     this._stocks = []
     for (let index in responseBody) {
       let stock = responseBody[index]
-      let stockDto: StockDto = new StockDto(stock['title'], stock['symbol'], 0, 0, [], false);
+      let stockDto: StockDto = new StockDto(stock['title'], stock['symbol'],  [], false);
       this._stocks.push(stockDto);
     }
 
     if(this._stocks.length === 0){
-      this._stocks.push(new StockDto('empty', 'empty', 0, 0, [], false));
+      this._stocks.push(new StockDto('empty', 'empty',  [], false));
     }
 
     return this._stocks
@@ -66,11 +66,11 @@ export class StockService {
     );
 
     if(response.status == 500) {
-      return new StockDto("error", "internal", 0, 0, [], false);
+      return new StockDto("error", "internal",  [], false);
     }
 
     if (response.status != 200) {
-      return new StockDto("error", "error", 0, 0, [], false);
+      return new StockDto("error", "error", [], false);
     }
 
     let responseBody = await response.json();
@@ -93,7 +93,7 @@ export class StockService {
       }
     }
 
-    return new StockDto(responseBody['Title'], responseBody['Symbol'], 0, 0, comments, markedAsFavorite);
+    return new StockDto(responseBody['Title'], responseBody['Symbol'], comments, markedAsFavorite);
   }
 
   public async addStockComment(abbreviation: string, message: string): Promise<Response> {

@@ -16,7 +16,7 @@ export class StockComponent implements OnInit {
   commentForm: FormGroup;
   numberOfVisibleStocks: number = 5;
   stockAbbreviation: string | null = "";
-  stockDto: StockDto = new StockDto("init", "init", -1, -1, [], false);
+  stockDto: StockDto = new StockDto("init", "init", [], false);
   successMessage: string = "";
   errorMessage: string = "";
 
