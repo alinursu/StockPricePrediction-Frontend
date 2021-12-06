@@ -64,6 +64,9 @@ export class RegisterComponent implements OnInit {
       // @ts-ignore
       this.successMessage = response.text;
       this.errorMessage = null;
+      const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+      await delay(2000);
+      this.router.navigate(['/login']);
     } else {
       // @ts-ignore
       this.errorMessage = response.text;
