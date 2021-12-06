@@ -56,16 +56,13 @@ export class StockService {
 
     if (responseBody['Comments'] != null) {
       for (let commentIndex in responseBody['Comments']) {
-        let date = new Date(responseBody['Comments'][commentIndex]['CreationDate']);
-        let dateString: string = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
-
         let comment: CommentDto = new CommentDto(
           responseBody['Comments'][commentIndex]['Id'],
           responseBody['Comments'][commentIndex]['Author'],
           responseBody['Comments'][commentIndex]['Message'],
           responseBody['Comments'][commentIndex]['Likes'],
           responseBody['Comments'][commentIndex]['Dislikes'],
-          dateString
+          new Date(responseBody['Comments'][commentIndex]['CreationDate'])
         )
         comments.push(comment);
       }

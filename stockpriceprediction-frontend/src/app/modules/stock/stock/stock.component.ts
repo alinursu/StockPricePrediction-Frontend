@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ComponentDisplayerService} from "../../../services/component-displayer.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {CookieService} from "ngx-cookie-service";
@@ -15,7 +15,7 @@ import {CommentDto} from "../../../models/dtos/CommentDto";
 export class StockComponent implements OnInit {
   commentForm: FormGroup;
   numberOfVisibleStocks: number = 5;
-  stockAbbreviation: string | null  = "";
+  stockAbbreviation: string | null = "";
   stockDto: StockDto = new StockDto("init", "init", -1, -1, [], false);
   successMessage: string = "";
   errorMessage: string = "";
@@ -30,7 +30,7 @@ export class StockComponent implements OnInit {
     this.componentDisplayerService.allStocksMenuItemHighlighted = false;
     this.componentDisplayerService.favoriteStocksMenuItemHighlighted = false;
 
-    if(this.cookieService.get('token') == '') {
+    if (this.cookieService.get('token') == '') {
       this.router.navigate(['/forbidden'])
     }
 
@@ -46,6 +46,17 @@ export class StockComponent implements OnInit {
     }
 
     this.stockDto = await this.stockService.getStockByAbbreviation(this.stockAbbreviation);
+    this.stockDto.comments.sort(StockComponent.compareCommentDtos);
+  }
+
+  private static compareCommentDtos(comment1: CommentDto, comment2: CommentDto): number {
+    if (comment1.datePublishedAsDate().getTime() > comment2.datePublishedAsDate().getTime())
+      return -1;
+
+    if (comment1.datePublishedAsDate().getTime() < comment2.datePublishedAsDate().getTime())
+      return 1;
+
+    return 0;
   }
 
   getNumberOfComments(): number {
@@ -74,22 +85,21 @@ export class StockComponent implements OnInit {
       this.commentText()?.value
     );
 
-    if(response.status == 200) {
-      let dateNow = new Date();
+    if (response.status == 200) {
       let responseBody = await response.json();
 
       this.stockDto.addComment(new CommentDto(
         Number(responseBody),
         this.cookieService.get('name'),
         this.commentText()?.value,
-        0, 0, `${dateNow.getDay()}/${dateNow.getMonth() + 1}/${dateNow.getFullYear()}`
+        0, 0, new Date()
       ));
+      this.stockDto.comments.sort(StockComponent.compareCommentDtos);
 
       this.successMessage = "Comentariul a fost adaugat!";
       this.errorMessage = "";
       this.commentText()?.setValue(" ");
-    }
-    else {
+    } else {
       this.successMessage = "";
       this.errorMessage = "A aparut o eroare!"
     }
@@ -98,7 +108,7 @@ export class StockComponent implements OnInit {
   public async likeComment(comment: CommentDto) {
     let responseStatusCode = await this.stockService.likeStockComment(comment.id);
 
-    if(responseStatusCode == 200) {
+    if (responseStatusCode == 200) {
       comment.incrementLikes();
     }
   }
@@ -106,7 +116,7 @@ export class StockComponent implements OnInit {
   public async dislikeComment(comment: CommentDto) {
     let responseStatusCode = await this.stockService.dislikeStockComment(comment.id);
 
-    if(responseStatusCode == 200) {
+    if (responseStatusCode == 200) {
       comment.incrementDislikes();
     }
   }
