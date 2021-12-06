@@ -1,17 +1,17 @@
 import {Component, ElementRef, OnInit} from '@angular/core';
-import {StockService} from "../../../services/stock.service";
 import {StockDto} from "../../../models/dtos/StockDto";
+import {StockService} from "../../../services/stock.service";
+import {ComponentDisplayerService} from "../../../services/component-displayer.service";
 import {Router} from "@angular/router";
 import {CookieService} from "ngx-cookie-service";
-import {ComponentDisplayerService} from "../../../services/component-displayer.service";
 import {formatDate} from "@angular/common";
 
 @Component({
-  selector: 'app-all-stocks',
-  templateUrl: './all-stocks.component.html',
-  styleUrls: ['./all-stocks.component.scss']
+  selector: 'app-favorite-stocks',
+  templateUrl: './favorite-stocks.component.html',
+  styleUrls: ['./favorite-stocks.component.scss']
 })
-export class AllStocksComponent implements OnInit {
+export class FavoriteStocksComponent implements OnInit {
   private displayStocksPerPage: number = 10;
   private stocksIndex: number = 0;
   private actualStocks: StockDto[] = []
@@ -24,8 +24,8 @@ export class AllStocksComponent implements OnInit {
               private router: Router,
               private cookieService: CookieService) {
     this.componentDisplayerService.displayHeaderAndFooter = true;
-    this.componentDisplayerService.allStocksMenuItemHighlighted = true;
-    this.componentDisplayerService.favoriteStocksMenuItemHighlighted = false;
+    this.componentDisplayerService.allStocksMenuItemHighlighted = false;
+    this.componentDisplayerService.favoriteStocksMenuItemHighlighted = true;
 
     if (this.cookieService.get('token') == '') {
       this.router.navigate(['/forbidden'])
@@ -39,11 +39,11 @@ export class AllStocksComponent implements OnInit {
   }
 
   public async getStocks(): Promise<StockDto[]> {
-    return await this.stockService.getAllStocks();
+    return await this.stockService.getFavoriteStocks();
   }
 
   public async updateActualStocks() {
-    let stocks = await this.stockService.getAllStocks();
+    let stocks = await this.stockService.getFavoriteStocks();
     this.actualStocks = stocks.slice(this.stocksIndex * this.displayStocksPerPage, (this.stocksIndex + 1) * this.displayStocksPerPage);
   }
 

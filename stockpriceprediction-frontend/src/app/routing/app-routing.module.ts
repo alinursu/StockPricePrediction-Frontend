@@ -7,6 +7,7 @@ import {AllStocksComponent} from "../modules/all-stocks/all-stocks/all-stocks.co
 import {NotFoundComponent} from "../modules/not-found/not-found/not-found.component";
 import {ForbiddenComponent} from "../modules/forbidden/forbidden/forbidden.component";
 import {StockComponent} from "../modules/stock/stock/stock.component";
+import {FavoriteStocksComponent} from "../modules/favorite-stocks/favorite-stocks/favorite-stocks.component";
 
 const routes: Routes = [
   {
@@ -27,7 +28,7 @@ const routes: Routes = [
   },
   {
     path: 'favorite-stocks',
-    component: AllStocksComponent
+    component: FavoriteStocksComponent
   },
   {
     path: 'forbidden',

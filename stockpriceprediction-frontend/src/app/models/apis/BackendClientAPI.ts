@@ -7,6 +7,7 @@ export class BackendClientAPI {
   private static readonly LOGIN_ENDPOINT = "/api/User/LoginUser";
   private static readonly REGISTER_ENDPOINT = "/api/User/RegisterUser";
   private static readonly ALL_STOCKS_ENDPOINT = "/api/Stock/GetAllStocks";
+  private static readonly FAVORITE_STOCKS_ENDPOINT = "/api/User/GetFavouriteStocks";
   private static readonly STOCK_ENDPOINT = "/api/Stock/GetStock";
   private static readonly ADD_COMMENT_ENDPOINT = "/api/Comment/AddComment";
   private static readonly LIKE_COMMENT_ENDPOINT = "/api/Comment/Upvote";
@@ -40,6 +41,16 @@ export class BackendClientAPI {
 
   public async getAllStocks(authorization: string): Promise<Response> {
     return await fetch(BackendClientAPI.endpoint(BackendClientAPI.ALL_STOCKS_ENDPOINT), {
+      method: "GET",
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${authorization}`
+      }
+    });
+  }
+
+  public async getFavoriteStocks(authorization: string): Promise<Response> {
+    return await fetch(BackendClientAPI.endpoint(BackendClientAPI.FAVORITE_STOCKS_ENDPOINT), {
       method: "GET",
       headers: {
         'Accept': 'application/json',

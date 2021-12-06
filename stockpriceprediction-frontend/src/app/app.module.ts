@@ -9,6 +9,7 @@ import { LoginModule } from './modules/login/login.module';
 import {CookieService} from "ngx-cookie-service";
 import {AllStocksModule} from "./modules/all-stocks/all-stocks.module";
 import {StockModule} from "./modules/stock/stock.module";
+import {FavoriteStocksModule} from "./modules/favorite-stocks/favorite-stocks.module";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {StockModule} from "./modules/stock/stock.module";
     RegisterModule,
     LoginModule,
     AllStocksModule,
-    StockModule
+    StockModule,
+    FavoriteStocksModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]

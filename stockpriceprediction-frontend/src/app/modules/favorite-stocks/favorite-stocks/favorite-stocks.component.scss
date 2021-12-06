@@ -1,0 +1,220 @@
+@import "../../../../styling/variables";
+
+* {
+  font-family: Bookman, serif;
+  background-color: $white;
+  color: $black;
+}
+
+.flex-container-row {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.flex-container-column {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+#spinner, #spinner:after {
+  border-radius: 50%;
+  width: 10em;
+  height: 10em;
+}
+
+#spinner {
+  margin: 60px auto;
+  font-size: 10px;
+  position: relative;
+  text-indent: -9999em;
+  border-top: 1.1em solid rgba(255, 255, 255, 0.2);
+  border-right: 1.1em solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1.1em solid rgba(255, 255, 255, 0.2);
+  border-left: 1.1em solid $black;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation: load8 1.1s infinite linear;
+  animation: load8 1.1s infinite linear;
+}
+@-webkit-keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+#searchBar {
+  margin: 1.5em 3em 3em 3em;
+  align-items: center;
+
+  div {
+    align-items: center;
+
+    input {
+      font-size: 20px;
+      border: 2px solid $black;
+      border-radius: 10px;
+      padding: 0.5em 1.4em 0.5em 0.5em;
+      box-shadow: 1px 1px 2px $black;
+
+      &:hover {
+        border-color: $orange;
+        box-shadow: 2px 2px 4px $black;
+        transition: 0.15s;
+      }
+    }
+
+    button {
+      -webkit-transform: rotate(315deg);
+      -moz-transform: rotate(315deg);
+      -o-transform: rotate(315deg);
+      transform: rotate(315deg);
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-size: 18px;
+      position: relative;
+      left: -1.4em;
+
+      &:hover {
+        color: $orange;
+        transition: 0.2s;
+      }
+    }
+  }
+}
+
+.stocks-error {
+  align-items: center;
+  margin: 1.5em 3em;
+  flex-grow: 1;
+}
+
+#stocks {
+  align-items: center;
+  margin: 1.5em 3em;
+  flex-grow: 1;
+
+  > .stock-container {
+    margin: 0 3em 2em 0;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    flex-grow: 1;
+    width: 20%;
+    border: 2px solid $black;
+    border-radius: 15px;
+    box-shadow: 2px 2px 4px $black;
+    background: linear-gradient(45deg, $darkPurple, $orange);
+    opacity: 0.8;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 4px 4px 8px $black;
+      transform: scale(1.025);
+      transition: 0.2s;
+    }
+
+    * {
+      background: none;
+    }
+
+    > div.flex-container-row {
+      align-items: center;
+
+      h2, h3 {
+        color: $black;
+        text-shadow: 1px 1px 1px $black;
+      }
+
+      h3 {
+        margin-left: auto;
+      }
+    }
+
+    > div.flex-container-column {
+      > p {
+        color: $white;
+        margin-bottom: 0.2em;
+        font-size: 17px;
+
+        > b {
+          color: $white;
+        }
+      }
+
+      > p.price-increased {
+        margin-top: 1em;
+        color: green;
+        font-weight: bold;
+      }
+
+      > p.price-decreased {
+        margin-top: 1em;
+        color: red;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+#pagination-container {
+  margin: 1.5em 3em;
+  align-items: center;
+
+  #pagination {
+    align-items: center;
+
+    a {
+      margin: 0 0.5em;
+      font-size: 26px;
+      text-decoration: none;
+      cursor: pointer;
+      text-shadow: 0.5px 0.5px 0.5px $black;
+
+      &:hover {
+        color: $orange;
+        transition: 0.1s;
+      }
+
+      &.selected
+      {
+        color: $white;
+        text-shadow: 0.5px 0.5px 0.5px $white;
+
+        &:hover {
+          color: $white;
+        }
+      }
+    }
+  }
+
+  .disabled {
+    pointer-events: none;
+    cursor: default;
+    text-decoration: none;
+    color: $gray;
+  }
+
+  .selected {
+    border: 1px solid $orange;
+    border-radius: 10px;
+    background-color: $orange;
+  }
+}

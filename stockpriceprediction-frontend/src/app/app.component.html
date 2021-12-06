@@ -14,7 +14,7 @@
       </a>
       <a class="menu-item" href="/favorite-stocks"
          [ngClass]="highlightFavoriteStocksMenuItem() ? 'highlighted-menu-item' : ''">
-        Stock-uri urmarite
+        Stock-uri favorite
       </a>
     </div>
 
@@ -24,7 +24,7 @@
         <h2 id="username">{{getUserName()}}</h2>
       </div>
 
-      <button id="logout-button" (click)="logoutEvent()">Deautentificare</button>
+      <button id="logout-button" (click)="logoutEvent()">Deconectare</button>
     </div>
   </div>
 </header>
@@ -46,6 +46,6 @@
   </div>
 
   <div *ngIf="getUserName()" class="flex-container-column" id="footer-deauthentication">
-    <button class="footer-button" (click)="logoutEvent()">Deautentificare</button>
+    <button class="footer-button" (click)="logoutEvent()">Deconectare</button>
   </div>
 </footer>

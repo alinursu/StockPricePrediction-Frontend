@@ -20,7 +20,7 @@ export class StockService {
     }
 
     let response: Response = await this.backendClientAPI.getAllStocks(this.cookieService.get('token'));
-    if (response.status != 200) {
+    if (response.status !== 200) {
       return [new StockDto("error", "error", 0, 0, [], false)];
     }
 
@@ -31,6 +31,31 @@ export class StockService {
       let stockDto: StockDto = new StockDto(stock['title'], stock['symbol'], 0, 0, [], false);
       this._stocks.push(stockDto);
     }
+    return this._stocks
+  }
+
+  public async getFavoriteStocks(): Promise<StockDto[]> {
+    if (this._stocks.length !== 0) {
+      return this._stocks;
+    }
+
+    let response: Response = await this.backendClientAPI.getFavoriteStocks(this.cookieService.get('token'));
+    if (response.status !== 200) {
+      return [new StockDto("error", "error", 0, 0, [], false)];
+    }
+
+    const responseBody = await response.json();
+    this._stocks = []
+    for (let index in responseBody) {
+      let stock = responseBody[index]
+      let stockDto: StockDto = new StockDto(stock['title'], stock['symbol'], 0, 0, [], false);
+      this._stocks.push(stockDto);
+    }
+
+    if(this._stocks.length === 0){
+      this._stocks.push(new StockDto('empty', 'empty', 0, 0, [], false));
+    }
+
     return this._stocks
   }
 
@@ -72,13 +97,11 @@ export class StockService {
   }
 
   public async addStockComment(abbreviation: string, message: string): Promise<Response> {
-    let response: Response = await this.backendClientAPI.addStockComment(
+    return await this.backendClientAPI.addStockComment(
       this.cookieService.get('token'),
       abbreviation,
       message
     );
-
-    return response;
   }
 
   public async likeStockComment(commentId: number): Promise<number> {
