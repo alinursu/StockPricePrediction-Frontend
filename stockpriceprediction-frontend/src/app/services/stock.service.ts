@@ -74,14 +74,14 @@ export class StockService {
     return new StockDto(responseBody['Title'], responseBody['Symbol'], 0, 0, comments, markedAsFavorite);
   }
 
-  public async addStockComment(abbreviation: string, message: string): Promise<number> {
+  public async addStockComment(abbreviation: string, message: string): Promise<Response> {
     let response: Response = await this.backendClientAPI.addStockComment(
       this.cookieService.get('token'),
       abbreviation,
       message
     );
 
-    return response.status;
+    return response;
   }
 
   public async likeStockComment(commentId: number): Promise<number> {

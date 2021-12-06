@@ -69,16 +69,17 @@ export class StockComponent implements OnInit {
   }
 
   public async insertComment() {
-    let responseStatusCode = await this.stockService.addStockComment(
+    let response = await this.stockService.addStockComment(
       this.stockDto.abbreviation,
       this.commentText()?.value
     );
 
-    if(responseStatusCode == 200) {
+    if(response.status == 200) {
       let dateNow = new Date();
+      let responseBody = await response.json();
 
       this.stockDto.addComment(new CommentDto(
-        0,
+        Number(responseBody),
         this.cookieService.get('name'),
         this.commentText()?.value,
         0, 0, `${dateNow.getDay()}/${dateNow.getMonth() + 1}/${dateNow.getFullYear()}`
@@ -86,6 +87,7 @@ export class StockComponent implements OnInit {
 
       this.successMessage = "Comentariul a fost adaugat!";
       this.errorMessage = "";
+      this.commentText()?.setValue(" ");
     }
     else {
       this.successMessage = "";
