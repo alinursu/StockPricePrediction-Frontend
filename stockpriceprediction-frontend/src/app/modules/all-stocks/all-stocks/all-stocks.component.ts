@@ -16,6 +16,7 @@ export class AllStocksComponent implements OnInit {
   private stocksIndex: number = 0;
   private actualStocks: StockDto[] = []
   private filtered: boolean = false;
+  private numberOfPages: number = 0;
 
   constructor(private htmlDocument: ElementRef,
               private stockService: StockService,
@@ -31,11 +32,11 @@ export class AllStocksComponent implements OnInit {
     }
 
     this.updateActualStocks();
+    this.updateNumberOfPages();
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
   }
-
 
   // TODO: This is just frontend functionality. Send request to backend
   public markAsFavorite(index: number) {
@@ -46,68 +47,75 @@ export class AllStocksComponent implements OnInit {
     starNode.innerText = starNode.innerText == "★" ? "☆" : "★";
   }
 
-  public getStocks(): StockDto[] {
-    return this.stockService.stocks;
+  public async getStocks(): Promise<StockDto[]> {
+    return await this.stockService.getAllStocks();
   }
 
-  public updateActualStocks() {
-    this.actualStocks = this.stockService.stocks.slice(this.stocksIndex * this.displayStocksPerPage, (this.stocksIndex + 1) * this.displayStocksPerPage);
+  public async updateActualStocks() {
+    let stocks = await this.stockService.getAllStocks();
+    this.actualStocks = stocks.slice(this.stocksIndex * this.displayStocksPerPage, (this.stocksIndex + 1) * this.displayStocksPerPage);
   }
 
   public getActualStocks(): StockDto[] {
     return this.actualStocks;
   }
 
-  public getNumberOfPages(stocks: StockDto[] = []): number {
+  public async updateNumberOfPages(stocks: StockDto[] = []) {
     if(stocks.length == 0) {
-      stocks = this.getStocks();
+      stocks = await this.getStocks();
     }
 
-    return Math.ceil(stocks.length % this.displayStocksPerPage);
+    this.numberOfPages = Math.ceil(stocks.length / this.displayStocksPerPage);
+  }
+
+  public getNumberOfPages(): number {
+    return this.numberOfPages;
   }
 
   public getStocksPages(): number[] {
     // TODO: Might not work if stocks.length > 30 (works, but looks horrible)
-    if(this.filtered) {
+    if (this.filtered) {
       return [0];
     }
 
-    let numberOfPages = this.getNumberOfPages();
-    return Array.from({length:(numberOfPages)}, (v, i) => i);
+    let numberOfPages = this.getNumberOfPages()
+
+    return Array.from({length: (numberOfPages)}, (v, i) => i);
   }
 
-  public updateStockIndexValue(newIndex: number) {
+  public async updateStockIndexValue(newIndex: number) {
     this.stocksIndex = newIndex;
-    this.updateActualStocks();
+    await this.updateActualStocks();
   }
 
   public getStocksIndex(): number {
     return this.stocksIndex;
   }
 
-  public decrementStocksIndex() {
+  public async decrementStocksIndex() {
     this.stocksIndex--;
-    this.updateActualStocks();
+    await this.updateActualStocks();
   }
 
-  public incrementStocksIndex() {
+  public async incrementStocksIndex() {
     this.stocksIndex++;
-    this.updateActualStocks();
+    await this.updateActualStocks();
   }
 
-  public onSearchBarChange(event:any) {
+  public async onSearchBarChange(event: any) {
     let searchPattern: string = event.target.value;
 
-    if(searchPattern != '') {
-      this.actualStocks = this.getStocks();
+    if (searchPattern != '') {
+      this.actualStocks = await this.getStocks();
       this.actualStocks = this.actualStocks.filter(stock =>
         stock.name.toLocaleLowerCase().includes(searchPattern.toLocaleLowerCase()) ||
         stock.abbreviation.toLocaleLowerCase().includes(searchPattern.toLocaleLowerCase())
       );
       this.filtered = true;
-    }
-    else {
-      this.updateActualStocks();
+      await this.updateNumberOfPages(this.actualStocks);
+    } else {
+      await this.updateActualStocks();
+      await this.updateNumberOfPages();
       this.filtered = false;
     }
   }
@@ -117,6 +125,6 @@ export class AllStocksComponent implements OnInit {
   }
 
   redirectToStockPage(stock: StockDto) {
-    this.router.navigate(['/stock']);
+    this.router.navigate([`/stock/${stock.abbreviation}`]);
   }
 }

@@ -1,9 +1,6 @@
-<!--TODO: This is mocked data.-->
-<!--  TODO: Create angular route with stock abbreviation as url parameter -->
-
 <div id="container" class="flex-container-column">
-  <h1>Dow Jones Industrial Average</h1>
-  <h2>INDU:IND</h2>
+  <h1>{{stockDto.name}}</h1>
+  <h2>{{stockDto.abbreviation}}</h2>
 
   <!--TODO: More informations can be scrapped on backend from https://www.bloomberg.com/quote/INDU:IND-->
   <p id="stock-description">The Dow Jones Industrial Average is a price-weighted average of 30 blue-chip stocks that are
@@ -22,7 +19,7 @@
   </div>
 
   <div id="comments-container">
-    <h2>5 Comentarii</h2>
+    <h2>{{getNumberOfComments()}} Comentarii</h2>
 
     <div class="flex-container-row">
       <div class="flex-container-row">

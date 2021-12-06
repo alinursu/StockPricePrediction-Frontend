@@ -22,7 +22,7 @@ const routes: Routes = [
     component: AllStocksComponent
   },
   {
-    path: 'stock',
+    path: 'stock/:abbreviation',
     component: StockComponent
   },
   {

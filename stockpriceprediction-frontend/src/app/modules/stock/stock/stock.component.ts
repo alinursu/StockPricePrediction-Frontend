@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {ComponentDisplayerService} from "../../../services/component-displayer.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {CookieService} from "ngx-cookie-service";
 import {StockService} from "../../../services/stock.service";
 import {CommentDto} from "../../../models/dtos/CommentDto";
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {StockDto} from "../../../models/dtos/StockDto";
 
 @Component({
   selector: 'app-stock',
@@ -14,12 +15,15 @@ import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/form
 export class StockComponent implements OnInit {
   commentForm: FormGroup;
   numberOfVisibleStocks: number = 5;
+  stockAbbreviation: string | null  = "";
+  stockDto: StockDto = new StockDto("init", "init", -1, -1);
 
   constructor(private componentDisplayerService: ComponentDisplayerService,
               private stockService: StockService,
               private router: Router,
               private formBuilder: FormBuilder,
-              private cookieService: CookieService) {
+              private cookieService: CookieService,
+              private route: ActivatedRoute) {
     this.componentDisplayerService.displayHeaderAndFooter = true;
     this.componentDisplayerService.allStocksMenuItemHighlighted = false;
     this.componentDisplayerService.favoriteStocksMenuItemHighlighted = false;
@@ -33,7 +37,19 @@ export class StockComponent implements OnInit {
     })
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    this.stockAbbreviation = this.route.snapshot.paramMap.get("abbreviation");
+    if (this.stockAbbreviation == null) {
+      this.stockAbbreviation = "";
+    }
+
+    // TODO: If nothing found (abbrv = "error"), display message (probably backend is unavailable)
+    this.stockDto = await this.stockService.getStockByAbbreviation(this.stockAbbreviation);
+    console.log(this.stockDto)
+  }
+
+  getNumberOfComments(): number {
+    return 0; // TODO: Hardcoded;
   }
 
   getComments(): CommentDto[] {
