@@ -1,3 +1,5 @@
+<div *ngIf="stockDto.abbreviation == 'init'" id="spinner"></div>
+
 <div *ngIf="stockDto.abbreviation == 'error'" class="stock-error flex-container-column">
   <h2>Eroare: Nu am gasit stock-ul pe care ai incercat sa il cauti!</h2>
 </div>
@@ -6,7 +8,8 @@
   <h2>Eroare: Serviciul este indisponibil momentan!</h2>
 </div>
 
-<div *ngIf="stockDto.abbreviation != 'error' && stockDto.abbreviation != 'internal'" id="container"
+<div *ngIf="stockDto.abbreviation != 'init' && stockDto.abbreviation != 'error' && stockDto.abbreviation != 'internal'"
+     id="container"
      class="flex-container-column">
   <h1>{{stockDto.name}}</h1>
   <div class="flex-container-row" style="align-items: center;">

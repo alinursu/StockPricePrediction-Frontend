@@ -21,7 +21,7 @@ export class StockService {
 
     let response: Response = await this.backendClientAPI.getAllStocks(this.cookieService.get('token'));
     if (response.status != 200) {
-      return [];
+      return [new StockDto("error", "error", 0, 0, [], false)];
     }
 
     const responseBody = await response.json();

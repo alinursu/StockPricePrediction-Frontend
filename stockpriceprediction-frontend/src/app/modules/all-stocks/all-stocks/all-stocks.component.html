@@ -5,12 +5,16 @@
   </div>
 </div>
 
-<div *ngIf="getActualStocks().length == 0" class="flex-container-column" id="stocks-error">
+<div *ngIf="getActualStocks().length == 0" class="flex-container-column" id="spinner"></div>
+
+<div *ngIf="getActualStocks().length == 1 && getActualStocks()[0].abbreviation == 'error'" class="flex-container-column"
+     id="stocks-error">
   <h2>Eroare: Serviciul nu este disponibil momentan!</h2>
 </div>
 
 <div id="stocks" class="flex-container-row">
-  <div *ngFor="let stock of getActualStocks(); let i = index" class="stock-container flex-container-column" (click)="redirectToStockPage(stock)">
+  <div *ngFor="let stock of getActualStocks(); let i = index" class="stock-container flex-container-column"
+       (click)="redirectToStockPage(stock)">
     <div class="flex-container-row">
       <h2>{{stock.name}}</h2>
       <h3>{{stock.abbreviation}}</h3>
@@ -31,6 +35,7 @@
        [ngClass]="getStocksIndex() == number ? 'selected' : ''">
       {{number + 1}}
     </a>
-    <a (click)="incrementStocksIndex()" [ngClass]="getStocksIndex() == getNumberOfPages() - 1 ? 'disabled' : ''">&raquo;</a>
+    <a (click)="incrementStocksIndex()"
+       [ngClass]="getStocksIndex() == getNumberOfPages() - 1 ? 'disabled' : ''">&raquo;</a>
   </div>
 </div>

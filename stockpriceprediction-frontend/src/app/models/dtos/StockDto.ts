@@ -3,8 +3,8 @@ import {CommentDto} from "./CommentDto";
 export class StockDto {
   private readonly _name: string;
   private readonly _abbreviation: string;
-  private readonly _actualValue: number;
-  private readonly _predictedValue: number;
+  private readonly _actualValue: number; // TODO: Remove.
+  private readonly _predictedValue: number; // TODO: Remove.
   private _comments: CommentDto[];
   private _isMarkedAsFavorite: boolean;
 
