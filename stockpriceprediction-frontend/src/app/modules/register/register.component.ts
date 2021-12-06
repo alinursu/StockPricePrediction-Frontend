@@ -47,7 +47,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public async registerSubmitted() {
+  async registerSubmitted() {
     if(this.registerForm.value.password !== this.registerForm.value.confirmPassword) {
       this.successMessage = null;
       this.errorMessage = "Eroare: Parolele introduse nu coincid!";
@@ -74,55 +74,55 @@ export class RegisterComponent implements OnInit {
     this.registerForm.controls['confirmPassword'].setValue('');
   }
 
-  public firstName(): AbstractControl | null {
+  firstName(): AbstractControl | null {
     return this.registerForm.get('firstName');
   }
 
-  public firstNameValidationRequired(): boolean {
+  firstNameValidationRequired(): boolean {
     return !this.firstName()?.errors?.['required'];
   }
 
-  public lastName(): AbstractControl | null {
+  lastName(): AbstractControl | null {
     return this.registerForm.get('lastName');
   }
 
-  public lastNameValidationRequired(): boolean {
+  lastNameValidationRequired(): boolean {
     return !this.lastName()?.errors?.['required'];
   }
 
-  public email(): AbstractControl | null {
+  email(): AbstractControl | null {
     return this.registerForm.get('email');
   }
 
-  public emailValidationRequired(): boolean {
+  emailValidationRequired(): boolean {
     return !this.email()?.errors?.['required'];
   }
 
-  public emailValidationIsEmail(): boolean {
+  emailValidationIsEmail(): boolean {
     return !this.email()?.errors?.['email'];
   }
 
-  public password(): AbstractControl | null {
+  password(): AbstractControl | null {
     return this.registerForm.get('password');
   }
 
-  public passwordValidationRequired(): boolean {
+  passwordValidationRequired(): boolean {
     return !this.password()?.errors?.['required'];
   }
 
-  public passwordValidationPattern(): boolean {
+  passwordValidationPattern(): boolean {
     return !this.password()?.errors?.['pattern'];
   }
 
-  public confirmPassword(): AbstractControl | null {
+  confirmPassword(): AbstractControl | null {
     return this.registerForm.get('confirmPassword');
   }
 
-  public confirmPasswordValidationRequired(): boolean {
+  confirmPasswordValidationRequired(): boolean {
     return !this.confirmPassword()?.errors?.['required'];
   }
 
-  public confirmPasswordValidationPattern(): boolean {
+  confirmPasswordValidationPattern(): boolean {
     return !this.confirmPassword()?.errors?.['pattern'];
   }
 

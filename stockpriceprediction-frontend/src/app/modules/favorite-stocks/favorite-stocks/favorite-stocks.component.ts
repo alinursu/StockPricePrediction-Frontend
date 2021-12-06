@@ -38,20 +38,20 @@ export class FavoriteStocksComponent implements OnInit {
   ngOnInit() {
   }
 
-  public async getStocks(): Promise<StockDto[]> {
+  async getStocks(): Promise<StockDto[]> {
     return await this.stockService.getFavoriteStocks();
   }
 
-  public async updateActualStocks() {
+  async updateActualStocks() {
     let stocks = await this.stockService.getFavoriteStocks();
     this.actualStocks = stocks.slice(this.stocksIndex * this.displayStocksPerPage, (this.stocksIndex + 1) * this.displayStocksPerPage);
   }
 
-  public getActualStocks(): StockDto[] {
+  getActualStocks(): StockDto[] {
     return this.actualStocks;
   }
 
-  public async updateNumberOfPages(stocks: StockDto[] = []) {
+  async updateNumberOfPages(stocks: StockDto[] = []) {
     if(stocks.length == 0) {
       stocks = await this.getStocks();
     }
@@ -59,35 +59,35 @@ export class FavoriteStocksComponent implements OnInit {
     this.numberOfPages = Math.ceil(stocks.length / this.displayStocksPerPage);
   }
 
-  public getNumberOfPages(): number {
+  getNumberOfPages(): number {
     return this.numberOfPages;
   }
 
-  public getStocksPages(): number[] {
+  getStocksPages(): number[] {
     let numberOfPages = this.getNumberOfPages()
     return Array.from({length: (numberOfPages)}, (v, i) => i);
   }
 
-  public async updateStockIndexValue(newIndex: number) {
+  async updateStockIndexValue(newIndex: number) {
     this.stocksIndex = newIndex;
     await this.updateActualStocks();
   }
 
-  public getStocksIndex(): number {
+  getStocksIndex(): number {
     return this.stocksIndex;
   }
 
-  public async decrementStocksIndex() {
+  async decrementStocksIndex() {
     this.stocksIndex--;
     await this.updateActualStocks();
   }
 
-  public async incrementStocksIndex() {
+  async incrementStocksIndex() {
     this.stocksIndex++;
     await this.updateActualStocks();
   }
 
-  public async onSearchBarChange(event: any) {
+  async onSearchBarChange(event: any) {
     let searchPattern: string = event.target.value;
 
     if (searchPattern != '') {

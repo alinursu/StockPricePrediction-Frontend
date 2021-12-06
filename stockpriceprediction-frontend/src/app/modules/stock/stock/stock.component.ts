@@ -20,6 +20,16 @@ export class StockComponent implements OnInit {
   successMessage: string = "";
   errorMessage: string = "";
 
+  private static compareCommentDtos(comment1: CommentDto, comment2: CommentDto): number {
+    if (comment1.datePublishedAsDate().getTime() > comment2.datePublishedAsDate().getTime())
+      return -1;
+
+    if (comment1.datePublishedAsDate().getTime() < comment2.datePublishedAsDate().getTime())
+      return 1;
+
+    return 0;
+  }
+
   constructor(private componentDisplayerService: ComponentDisplayerService,
               private stockService: StockService,
               private router: Router,
@@ -49,16 +59,6 @@ export class StockComponent implements OnInit {
     this.stockDto.comments.sort(StockComponent.compareCommentDtos);
   }
 
-  private static compareCommentDtos(comment1: CommentDto, comment2: CommentDto): number {
-    if (comment1.datePublishedAsDate().getTime() > comment2.datePublishedAsDate().getTime())
-      return -1;
-
-    if (comment1.datePublishedAsDate().getTime() < comment2.datePublishedAsDate().getTime())
-      return 1;
-
-    return 0;
-  }
-
   getNumberOfComments(): number {
     return this.stockDto.comments.length;
   }
@@ -79,7 +79,7 @@ export class StockComponent implements OnInit {
     return this.stockDto.isMarkedAsFavorite;
   }
 
-  public async insertComment() {
+  async insertComment() {
     let response = await this.stockService.addStockComment(
       this.stockDto.abbreviation,
       this.commentText()?.value
@@ -105,7 +105,7 @@ export class StockComponent implements OnInit {
     }
   }
 
-  public async likeComment(comment: CommentDto) {
+  async likeComment(comment: CommentDto) {
     let responseStatusCode = await this.stockService.likeStockComment(comment.id);
 
     if (responseStatusCode == 200) {
@@ -113,7 +113,7 @@ export class StockComponent implements OnInit {
     }
   }
 
-  public async dislikeComment(comment: CommentDto) {
+  async dislikeComment(comment: CommentDto) {
     let responseStatusCode = await this.stockService.dislikeStockComment(comment.id);
 
     if (responseStatusCode == 200) {
@@ -121,11 +121,11 @@ export class StockComponent implements OnInit {
     }
   }
 
-  public commentText(): AbstractControl | null {
+  commentText(): AbstractControl | null {
     return this.commentForm.get('text');
   }
 
-  public commentTextValidationRequired(): boolean {
+  commentTextValidationRequired(): boolean {
     return !this.commentText()?.errors?.['required'];
   }
 

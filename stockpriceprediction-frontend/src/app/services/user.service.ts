@@ -73,7 +73,6 @@ export class UserService {
       text = "Contul a fost creat!";
     }
 
-    // TODO: Change it to 409 Conflict ?
     if (response.status == 400) {
       text = "Eroare: Adresa de email este asociata unui cont existent!";
     }

@@ -42,9 +42,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public async loginSubmitted() {
-    // TODO: After pressing button, request takes about 1-2seconds. Add a loading gif
-
+  async loginSubmitted() {
     let response = await this.userService.handleLoginRequest(this.loginForm.value);
 
     // @ts-ignore
@@ -62,23 +60,23 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  public email(): AbstractControl | null {
+  email(): AbstractControl | null {
     return this.loginForm.get('email');
   }
 
-  public emailValidationRequired(): boolean {
+  emailValidationRequired(): boolean {
     return !this.email()?.errors?.['required'];
   }
 
-  public emailValidationIsEmail(): boolean {
+  emailValidationIsEmail(): boolean {
     return !this.email()?.errors?.['email'];
   }
 
-  public password(): AbstractControl | null {
+  password(): AbstractControl | null {
     return this.loginForm.get('password');
   }
 
-  public passwordValidationRequired(): boolean {
+  passwordValidationRequired(): boolean {
     return !this.password()?.errors?.['required'];
   }
 

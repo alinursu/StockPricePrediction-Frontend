@@ -11,7 +11,45 @@ export class StockService {
   private backendClientAPI: BackendClientAPI = new BackendClientAPI();
   private _stocks: StockDto[] = []
 
+  private async parseGetStocksResponseBody(response: Response) {
+    const responseBody = await response.json();
+    this._stocks = []
+    for (let index in responseBody) {
+      let stock = responseBody[index]
+      let stockDto: StockDto = new StockDto(stock['title'], stock['symbol'], [], false);
+      this._stocks.push(stockDto);
+    }
+  }
+
+  private async parseGetStockResponseBody(response: Response) {
+    let responseBody = await response.json();
+    responseBody = JSON.parse(responseBody);
+    let markedAsFavorite: boolean = responseBody['IsFavourite'];
+    responseBody = responseBody['Stock'];
+    let comments: CommentDto[] = [];
+
+    if (responseBody['Comments'] != null) {
+      for (let commentIndex in responseBody['Comments']) {
+        let comment: CommentDto = new CommentDto(
+          responseBody['Comments'][commentIndex]['Id'],
+          responseBody['Comments'][commentIndex]['Author'],
+          responseBody['Comments'][commentIndex]['Message'],
+          responseBody['Comments'][commentIndex]['Likes'],
+          responseBody['Comments'][commentIndex]['Dislikes'],
+          new Date(responseBody['Comments'][commentIndex]['CreationDate'])
+        )
+        comments.push(comment);
+      }
+    }
+
+    return new StockDto(responseBody['Title'], responseBody['Symbol'], comments, markedAsFavorite);
+  }
+
   constructor(private cookieService: CookieService) {
+  }
+
+  get stocks(): StockDto[] {
+    return this._stocks;
   }
 
   public async getAllStocks(): Promise<StockDto[]> {
@@ -21,16 +59,10 @@ export class StockService {
 
     let response: Response = await this.backendClientAPI.getAllStocks(this.cookieService.get('token'));
     if (response.status !== 200) {
-      return [new StockDto("error", "error",  [], false)];
+      return [new StockDto("error", "error", [], false)];
     }
 
-    const responseBody = await response.json();
-    this._stocks = []
-    for (let index in responseBody) {
-      let stock = responseBody[index]
-      let stockDto: StockDto = new StockDto(stock['title'], stock['symbol'],  [], false);
-      this._stocks.push(stockDto);
-    }
+    await this.parseGetStocksResponseBody(response);
     return this._stocks
   }
 
@@ -44,13 +76,7 @@ export class StockService {
       return [new StockDto("error", "error", [], false)];
     }
 
-    const responseBody = await response.json();
-    this._stocks = []
-    for (let index in responseBody) {
-      let stock = responseBody[index]
-      let stockDto: StockDto = new StockDto(stock['title'], stock['symbol'],  [], false);
-      this._stocks.push(stockDto);
-    }
+    await this.parseGetStocksResponseBody(response);
 
     if(this._stocks.length === 0){
       this._stocks.push(new StockDto('empty', 'empty',  [], false));
@@ -73,27 +99,7 @@ export class StockService {
       return new StockDto("error", "error", [], false);
     }
 
-    let responseBody = await response.json();
-    responseBody = JSON.parse(responseBody);
-    let markedAsFavorite: boolean = responseBody['IsFavourite'];
-    responseBody = responseBody['Stock'];
-    let comments: CommentDto[] = [];
-
-    if (responseBody['Comments'] != null) {
-      for (let commentIndex in responseBody['Comments']) {
-        let comment: CommentDto = new CommentDto(
-          responseBody['Comments'][commentIndex]['Id'],
-          responseBody['Comments'][commentIndex]['Author'],
-          responseBody['Comments'][commentIndex]['Message'],
-          responseBody['Comments'][commentIndex]['Likes'],
-          responseBody['Comments'][commentIndex]['Dislikes'],
-          new Date(responseBody['Comments'][commentIndex]['CreationDate'])
-        )
-        comments.push(comment);
-      }
-    }
-
-    return new StockDto(responseBody['Title'], responseBody['Symbol'], comments, markedAsFavorite);
+    return await this.parseGetStockResponseBody(response);
   }
 
   public async addStockComment(abbreviation: string, message: string): Promise<Response> {
@@ -138,9 +144,5 @@ export class StockService {
     );
 
     return response.status;
-  }
-
-  get stocks(): StockDto[] {
-    return this._stocks;
   }
 }

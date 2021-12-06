@@ -14,10 +14,6 @@ export class StockDto {
     this._isMarkedAsFavorite = isMarkedAsFavorite;
   }
 
-  public addComment(comment: CommentDto) {
-    this._comments.push(comment);
-  }
-
   get name(): string {
     return this._name;
   }
@@ -32,6 +28,10 @@ export class StockDto {
 
   get isMarkedAsFavorite(): boolean {
     return this._isMarkedAsFavorite;
+  }
+
+  public addComment(comment: CommentDto) {
+    this._comments.push(comment);
   }
 
   public changeFavoriteState() {
