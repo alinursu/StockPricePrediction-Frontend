@@ -64,13 +64,7 @@ export class AllStocksComponent implements OnInit {
   }
 
   public getStocksPages(): number[] {
-    // TODO: Might not work if stocks.length > 30 (works, but looks horrible)
-    if (this.filtered) {
-      return [0];
-    }
-
     let numberOfPages = this.getNumberOfPages()
-
     return Array.from({length: (numberOfPages)}, (v, i) => i);
   }
 
