@@ -1,4 +1,13 @@
-<div id="container" class="flex-container-column">
+<div *ngIf="stockDto.abbreviation == 'error'" class="stock-error flex-container-column">
+  <h2>Eroare: Nu am gasit stock-ul pe care ai incercat sa il cauti!</h2>
+</div>
+
+<div *ngIf="stockDto.abbreviation == 'internal'" class="stock-error flex-container-column">
+  <h2>Eroare: Serviciul este indisponibil momentan!</h2>
+</div>
+
+<div *ngIf="stockDto.abbreviation != 'error' && stockDto.abbreviation != 'internal'" id="container"
+     class="flex-container-column">
   <h1>{{stockDto.name}}</h1>
   <h2>{{stockDto.abbreviation}}</h2>
 
@@ -22,6 +31,14 @@
     <h2>{{getNumberOfComments()}} Comentarii</h2>
 
     <div class="flex-container-row">
+      <div *ngIf="successMessage" class="success-message">
+        {{successMessage}}
+      </div>
+
+      <div *ngIf="errorMessage" class="error-message">
+        {{errorMessage}}
+      </div>
+
       <div class="flex-container-row">
         <img src="/assets/profile-user.png" alt="">
 
@@ -39,7 +56,7 @@
         </form>
       </div>
 
-      <div *ngIf="getComments().length == 0" class="flex-container-column" id="no-comments-container">
+      <div *ngIf="getNumberOfComments() == 0" class="flex-container-column" id="no-comments-container">
         <h3>Fii primul care lasa o parere!</h3>
       </div>
 
@@ -47,16 +64,15 @@
         <div *ngFor="let comment of getVisibleComments()" class="comment flex-container-column">
           <div class="flex-container-row">
             <img src="/assets/profile-user.png" alt="">
-            <p class="comment-name">{{comment.userName}}</p>
+            <p class="comment-name">{{comment.author}}</p>
             <p class="comment-date">{{comment.datePublished}}</p>
           </div>
 
-          <p class="comment-text">{{comment.text}}</p>
+          <p class="comment-text">{{comment.message}}</p>
 
-          <!--        TODO: Make them work-->
           <div class="flex-container-row">
-            <button type="button" class="comment-likes">{{comment.likes}} Likes</button>
-            <button type="button" class="comment-dislikes">{{comment.dislikes}} Dislikes</button>
+            <button type="button" class="comment-likes" (click)="likeComment(comment)">{{comment.likes}} Likes</button>
+            <button type="button" class="comment-dislikes" (click)="dislikeComment(comment)">{{comment.dislikes}} Dislikes</button>
           </div>
         </div>
 

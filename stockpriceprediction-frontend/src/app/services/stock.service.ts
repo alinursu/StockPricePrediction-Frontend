@@ -1,27 +1,15 @@
 import {Injectable} from '@angular/core';
 import {StockDto} from "../models/dtos/StockDto";
-import {CommentDto} from "../models/dtos/CommentDto";
 import {BackendClientAPI} from "../models/apis/BackendClientAPI";
 import {CookieService} from "ngx-cookie-service";
+import {CommentDto} from "../models/dtos/CommentDto";
 
 @Injectable({
   providedIn: 'root'
 })
 export class StockService {
   private backendClientAPI: BackendClientAPI = new BackendClientAPI();
-
-  // TODO: This is dummy data.
   private _stocks: StockDto[] = []
-
-  private _comments: CommentDto[] = [
-    new CommentDto("Abrv", "John Doe", "29/11/2021", "Cool prediction", 2, 1),
-    new CommentDto("Abrv", "Jane Doe", "28/11/2021", "Not so cool prediction", 10, 1),
-    new CommentDto("Abrv", "John Doe", "27/11/2021", "I don't know what is going on here", 1, 10),
-    new CommentDto("Abrv", "Matt Hone", "26/11/2021", "Comments works!", 100, 1),
-    new CommentDto("Abrv", "Unknown Man", "25/11/2021", "Cool prediction", 0, 0),
-    new CommentDto("Abrv", "Unknown Man", "24/11/2021", "Test1", 0, 0),
-    new CommentDto("Abrv", "Unknown Man", "23/11/2021", "Test2", 0, 0)
-  ]
 
   constructor(private cookieService: CookieService) {
   }
@@ -32,14 +20,13 @@ export class StockService {
     }
 
     let response: Response = await this.backendClientAPI.getAllStocks(this.cookieService.get('token'));
-    if(response.status != 200) {
+    if (response.status != 200) {
       return [];
     }
 
     const responseBody = await response.json();
     this._stocks = []
-    for(let index in responseBody) {
-      // TODO: The values of stock are hardcoded.
+    for (let index in responseBody) {
       let stock = responseBody[index]
       let stockDto: StockDto = new StockDto(stock['title'], stock['symbol'], 0, 0);
       this._stocks.push(stockDto);
@@ -53,19 +40,66 @@ export class StockService {
       abbreviation
     );
 
-    if(response.status != 200) {
+    if(response.status == 500) {
+      return new StockDto("error", "internal", 0, 0);
+    }
+
+    if (response.status != 200) {
       return new StockDto("error", "error", 0, 0);
     }
 
     const responseBody = await response.json();
-    return new StockDto(responseBody['title'], responseBody['symbol'], 0, 0);
+    let comments: CommentDto[] = [];
+
+    if (responseBody['comments'] != null) {
+      for (let commentIndex in responseBody['comments']) {
+        let date = new Date(responseBody['comments'][commentIndex]['creationDate']);
+        let dateString: string = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
+
+        let comment: CommentDto = new CommentDto(
+          responseBody['comments'][commentIndex]['id'],
+          responseBody['comments'][commentIndex]['author'],
+          responseBody['comments'][commentIndex]['message'],
+          responseBody['comments'][commentIndex]['likes'],
+          responseBody['comments'][commentIndex]['dislikes'],
+          dateString
+        )
+        comments.push(comment);
+      }
+    }
+
+    return new StockDto(responseBody['title'], responseBody['symbol'], 0, 0, comments);
+  }
+
+  public async addStockComment(abbreviation: string, message: string): Promise<number> {
+    let response: Response = await this.backendClientAPI.addStockComment(
+      this.cookieService.get('token'),
+      abbreviation,
+      message
+    );
+
+    return response.status;
+  }
+
+  public async likeStockComment(commentId: number): Promise<number> {
+    let response: Response = await this.backendClientAPI.likeComment(
+      this.cookieService.get('token'),
+      commentId
+    );
+
+    return response.status;
+  }
+
+  public async dislikeStockComment(commentId: number): Promise<number> {
+    let response: Response = await this.backendClientAPI.dislikeComment(
+      this.cookieService.get('token'),
+      commentId
+    );
+
+    return response.status;
   }
 
   get stocks(): StockDto[] {
     return this._stocks;
-  }
-
-  get comments(): CommentDto[] {
-    return this._comments;
   }
 }

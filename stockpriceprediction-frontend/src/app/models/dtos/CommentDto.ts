@@ -1,36 +1,31 @@
 export class CommentDto {
-  private readonly _stockAbbreviation: string;
-  private readonly _userName: string;
+  private readonly _id: number;
+  private readonly _author: string;
+  private readonly _message: string;
+  private _likes: number;
+  private _dislikes: number;
   private readonly _datePublished: string;
-  private readonly _text: string;
-  private readonly _likes: number;
-  private readonly _dislikes: number;
 
-
-  constructor(stockAbbreviation: string, userName: string, datePublished: string, text: string, likes: number, dislikes: number) {
-    this._stockAbbreviation = stockAbbreviation;
-    this._userName = userName;
-    this._datePublished = datePublished;
-    this._text = text;
+  constructor(id: number, author: string, message: string, likes: number,
+              dislikes: number, datePublished: string) {
+    this._id = id;
+    this._author = author;
+    this._message = message;
     this._likes = likes;
     this._dislikes = dislikes;
+    this._datePublished = datePublished
   }
 
-
-  get stockAbbreviation(): string {
-    return this._stockAbbreviation;
+  get id(): number {
+    return this._id;
   }
 
-  get userName(): string {
-    return this._userName;
+  get author(): string {
+    return this._author;
   }
 
-  get datePublished(): string {
-    return this._datePublished;
-  }
-
-  get text(): string {
-    return this._text;
+  get message(): string {
+    return this._message;
   }
 
   get likes(): number {
@@ -39,5 +34,17 @@ export class CommentDto {
 
   get dislikes(): number {
     return this._dislikes;
+  }
+
+  get datePublished(): string {
+    return this._datePublished;
+  }
+
+  public incrementLikes() {
+    this._likes++;
+  }
+
+  public incrementDislikes() {
+    this._dislikes++;
   }
 }

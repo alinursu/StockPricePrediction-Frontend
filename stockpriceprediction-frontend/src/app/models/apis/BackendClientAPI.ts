@@ -8,6 +8,9 @@ export class BackendClientAPI {
   private static readonly REGISTER_ENDPOINT = "/api/User/RegisterUser";
   private static readonly ALL_STOCKS_ENDPOINT = "/api/Stock/GetAllStocks";
   private static readonly STOCK_ENDPOINT = "/api/Stock/GetStock";
+  private static readonly ADD_COMMENT_ENDPOINT = "/api/Comment/AddComment";
+  private static readonly LIKE_COMMENT_ENDPOINT = "/api/Comment/Upvote";
+  private static readonly DISLIKE_COMMENT_ENDPOINT = "/api/Comment/Downvote";
 
   private static endpoint(endpoint: string) {
     return `${this.BACKEND_URL}${endpoint}`;
@@ -38,7 +41,7 @@ export class BackendClientAPI {
       method: "GET",
       headers: {
         'Accept': 'application/json',
-        'Authorization': authorization
+        'Authorization': `Bearer ${authorization}`
       }
     });
   }
@@ -49,7 +52,45 @@ export class BackendClientAPI {
       method: "GET",
       headers: {
         'Accept': 'application/json',
-        'Authorization': authorization
+        'Authorization': `Bearer ${authorization}`
+      }
+    });
+  }
+
+  public async addStockComment(authorization: string, abbreviation: string, message: string): Promise<Response> {
+    return await fetch(BackendClientAPI.endpoint(BackendClientAPI.ADD_COMMENT_ENDPOINT), {
+      method: "POST",
+      body: JSON.stringify({
+        "message": message,
+        "stockSymbol": abbreviation,
+        'creationDate': new Date().toISOString()
+      }),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authorization}`
+      }
+    });
+  }
+
+  public async likeComment(authorization: string, commentId: number): Promise<Response> {
+    let endpoint = `${BackendClientAPI.endpoint(BackendClientAPI.LIKE_COMMENT_ENDPOINT)}?commentId=${commentId}`;
+
+    return await fetch(endpoint, {
+      method: "PUT",
+      headers: {
+        'Authorization': `Bearer ${authorization}`
+      }
+    });
+  }
+
+  public async dislikeComment(authorization: string, commentId: number): Promise<Response> {
+    let endpoint = `${BackendClientAPI.endpoint(BackendClientAPI.DISLIKE_COMMENT_ENDPOINT)}?commentId=${commentId}`;
+
+    return await fetch(endpoint, {
+      method: "PUT",
+      headers: {
+        'Authorization': `Bearer ${authorization}`
       }
     });
   }

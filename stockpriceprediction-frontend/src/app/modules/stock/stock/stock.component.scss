@@ -18,6 +18,12 @@
   flex-direction: column;
 }
 
+.stock-error {
+  margin: 1.5em 3em;
+  align-items: center;
+  flex-grow: 1;
+}
+
 #container {
   margin: 1.5em 3em;
   align-items: center;
@@ -59,6 +65,18 @@
     width: 100%;
     align-items: initial;
     margin-top: 2em;
+
+    .success-message {
+      color: green;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .error-message {
+      color: red;
+      font-size: 16px;
+      font-weight: bold;
+    }
 
     div {
       width: 70%;

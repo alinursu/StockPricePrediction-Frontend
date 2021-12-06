@@ -3,9 +3,9 @@ import {ComponentDisplayerService} from "../../../services/component-displayer.s
 import {ActivatedRoute, Router} from "@angular/router";
 import {CookieService} from "ngx-cookie-service";
 import {StockService} from "../../../services/stock.service";
-import {CommentDto} from "../../../models/dtos/CommentDto";
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {StockDto} from "../../../models/dtos/StockDto";
+import {CommentDto} from "../../../models/dtos/CommentDto";
 
 @Component({
   selector: 'app-stock',
@@ -17,6 +17,8 @@ export class StockComponent implements OnInit {
   numberOfVisibleStocks: number = 5;
   stockAbbreviation: string | null  = "";
   stockDto: StockDto = new StockDto("init", "init", -1, -1);
+  successMessage: string = "";
+  errorMessage: string = "";
 
   constructor(private componentDisplayerService: ComponentDisplayerService,
               private stockService: StockService,
@@ -43,29 +45,64 @@ export class StockComponent implements OnInit {
       this.stockAbbreviation = "";
     }
 
-    // TODO: If nothing found (abbrv = "error"), display message (probably backend is unavailable)
     this.stockDto = await this.stockService.getStockByAbbreviation(this.stockAbbreviation);
-    console.log(this.stockDto)
   }
 
   getNumberOfComments(): number {
-    return 0; // TODO: Hardcoded;
+    return this.stockDto.comments.length;
   }
 
   getComments(): CommentDto[] {
-    return this.stockService.comments;
+    return this.stockDto.comments;
   }
 
   getVisibleComments(): CommentDto[] {
-    return this.stockService.comments.slice(0, this.numberOfVisibleStocks);
+    return this.stockDto.comments.slice(0, this.numberOfVisibleStocks);
   }
 
   increaseNumberOfVisibleComments() {
     this.numberOfVisibleStocks += 5;
   }
 
-  public insertComment() {
-    // TODO: Send comment to backend
+  public async insertComment() {
+    let responseStatusCode = await this.stockService.addStockComment(
+      this.stockDto.abbreviation,
+      this.commentText()?.value
+    );
+
+    if(responseStatusCode == 200) {
+      let dateNow = new Date();
+
+      this.stockDto.addComment(new CommentDto(
+        0,
+        this.cookieService.get('name'),
+        this.commentText()?.value,
+        0, 0, `${dateNow.getDay()}/${dateNow.getMonth() + 1}/${dateNow.getFullYear()}`
+      ));
+
+      this.successMessage = "Comentariul a fost adaugat!";
+      this.errorMessage = "";
+    }
+    else {
+      this.successMessage = "";
+      this.errorMessage = "A aparut o eroare!"
+    }
+  }
+
+  public async likeComment(comment: CommentDto) {
+    let responseStatusCode = await this.stockService.likeStockComment(comment.id);
+
+    if(responseStatusCode == 200) {
+      comment.incrementLikes();
+    }
+  }
+
+  public async dislikeComment(comment: CommentDto) {
+    let responseStatusCode = await this.stockService.dislikeStockComment(comment.id);
+
+    if(responseStatusCode == 200) {
+      comment.incrementDislikes();
+    }
   }
 
   public commentText(): AbstractControl | null {
