@@ -11,6 +11,8 @@ export class BackendClientAPI {
   private static readonly ADD_COMMENT_ENDPOINT = "/api/Comment/AddComment";
   private static readonly LIKE_COMMENT_ENDPOINT = "/api/Comment/Upvote";
   private static readonly DISLIKE_COMMENT_ENDPOINT = "/api/Comment/Downvote";
+  private static readonly ADD_FAVORITE_COMMENT_ENDPOINT = "/api/User/AddFavouriteStock";
+  private static readonly REMOVE_FAVORITE_COMMENT_ENDPOINT = "/api/User/RemoveFavouriteStock";
 
   private static endpoint(endpoint: string) {
     return `${this.BACKEND_URL}${endpoint}`;
@@ -91,6 +93,32 @@ export class BackendClientAPI {
       method: "PUT",
       headers: {
         'Authorization': `Bearer ${authorization}`
+      }
+    });
+  }
+
+  public async markStockAsFavorite(authorization: string, abbreviation: string): Promise<Response> {
+    return await fetch(BackendClientAPI.endpoint(BackendClientAPI.ADD_FAVORITE_COMMENT_ENDPOINT), {
+      method: "POST",
+      body:JSON.stringify({
+        stockSymbol: abbreviation
+      }),
+      headers: {
+        'Authorization': `Bearer ${authorization}`,
+        'Content-Type': 'application/json'
+      }
+    });
+  }
+
+  public async markStockAsNotFavorite(authorization: string, abbreviation: string): Promise<Response> {
+    return await fetch(BackendClientAPI.endpoint(BackendClientAPI.REMOVE_FAVORITE_COMMENT_ENDPOINT), {
+      method: "POST",
+      body:JSON.stringify({
+        stockSymbol: abbreviation
+      }),
+      headers: {
+        'Authorization': `Bearer ${authorization}`,
+        'Content-Type': 'application/json'
       }
     });
   }

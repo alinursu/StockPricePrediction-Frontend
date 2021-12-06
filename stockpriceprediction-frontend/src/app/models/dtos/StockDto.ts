@@ -6,13 +6,17 @@ export class StockDto {
   private readonly _actualValue: number;
   private readonly _predictedValue: number;
   private _comments: CommentDto[];
+  private _isMarkedAsFavorite: boolean;
 
-  constructor(name: string, abbreviation: string, actualValue: number, predictedValue: number, comments: CommentDto[] = []) {
+  constructor(name: string, abbreviation: string, actualValue: number,
+              predictedValue: number, comments: CommentDto[] = [],
+              isMarkedAsFavorite: boolean) {
     this._name = name;
     this._abbreviation = abbreviation;
     this._actualValue = actualValue;
     this._predictedValue = predictedValue;
     this._comments = comments;
+    this._isMarkedAsFavorite = isMarkedAsFavorite;
   }
 
   public addComment(comment: CommentDto) {
@@ -37,5 +41,13 @@ export class StockDto {
 
   get comments(): CommentDto[] {
     return this._comments;
+  }
+
+  get isMarkedAsFavorite(): boolean {
+    return this._isMarkedAsFavorite;
+  }
+
+  public changeFavoriteState() {
+    this._isMarkedAsFavorite = !this._isMarkedAsFavorite;
   }
 }

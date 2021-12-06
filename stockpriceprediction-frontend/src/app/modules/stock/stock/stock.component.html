@@ -9,7 +9,14 @@
 <div *ngIf="stockDto.abbreviation != 'error' && stockDto.abbreviation != 'internal'" id="container"
      class="flex-container-column">
   <h1>{{stockDto.name}}</h1>
-  <h2>{{stockDto.abbreviation}}</h2>
+  <div class="flex-container-row" style="align-items: center;">
+    <h2>{{stockDto.abbreviation}}</h2>
+    <button type="button" class="favorite-mark"
+            (click)="isMarkedAsFavorite()? markAsNotFavorite() : markAsFavorite()">
+      {{isMarkedAsFavorite() ? '&#9733;' : '&#9734;'}}
+    </button>
+  </div>
+
 
   <!--TODO: More informations can be scrapped on backend from https://www.bloomberg.com/quote/INDU:IND-->
   <p id="stock-description">The Dow Jones Industrial Average is a price-weighted average of 30 blue-chip stocks that are
@@ -72,7 +79,9 @@
 
           <div class="flex-container-row">
             <button type="button" class="comment-likes" (click)="likeComment(comment)">{{comment.likes}} Likes</button>
-            <button type="button" class="comment-dislikes" (click)="dislikeComment(comment)">{{comment.dislikes}} Dislikes</button>
+            <button type="button" class="comment-dislikes" (click)="dislikeComment(comment)">{{comment.dislikes}}
+              Dislikes
+            </button>
           </div>
         </div>
 

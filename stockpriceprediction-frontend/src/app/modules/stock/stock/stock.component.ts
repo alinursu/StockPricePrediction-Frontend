@@ -16,7 +16,7 @@ export class StockComponent implements OnInit {
   commentForm: FormGroup;
   numberOfVisibleStocks: number = 5;
   stockAbbreviation: string | null  = "";
-  stockDto: StockDto = new StockDto("init", "init", -1, -1);
+  stockDto: StockDto = new StockDto("init", "init", -1, -1, [], false);
   successMessage: string = "";
   errorMessage: string = "";
 
@@ -62,6 +62,10 @@ export class StockComponent implements OnInit {
 
   increaseNumberOfVisibleComments() {
     this.numberOfVisibleStocks += 5;
+  }
+
+  isMarkedAsFavorite(): boolean {
+    return this.stockDto.isMarkedAsFavorite;
   }
 
   public async insertComment() {
@@ -111,5 +115,21 @@ export class StockComponent implements OnInit {
 
   public commentTextValidationRequired(): boolean {
     return !this.commentText()?.errors?.['required'];
+  }
+
+  async markAsFavorite() {
+    let responseStatusCode = await this.stockService.markStockAsFavorite(this.stockDto.abbreviation);
+
+    if (responseStatusCode == 200) {
+      this.stockDto.changeFavoriteState();
+    }
+  }
+
+  async markAsNotFavorite() {
+    let responseStatusCode = await this.stockService.markStockAsNotFavorite(this.stockDto.abbreviation);
+
+    if (responseStatusCode == 200) {
+      this.stockDto.changeFavoriteState();
+    }
   }
 }
