@@ -3,6 +3,7 @@ import {StockDto} from "../models/dtos/StockDto";
 import {BackendClientAPI} from "../models/apis/BackendClientAPI";
 import {CookieService} from "ngx-cookie-service";
 import {CommentDto} from "../models/dtos/CommentDto";
+import {StockDataDto} from "../models/dtos/StockDataDto";
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +44,17 @@ export class StockService {
     }
 
     return new StockDto(responseBody['Title'], responseBody['Symbol'], comments, markedAsFavorite);
+  }
+
+  private async parseStockDataResponseBody(response: Response): Promise<StockDataDto[]> {
+    let responseBody = await response.json();
+    let data: StockDataDto[] = [];
+
+    for(let value in responseBody) {
+      data.push(new StockDataDto(new Date(value), Number(Number(responseBody[value]).toFixed(3))));
+    }
+
+    return data;
   }
 
   constructor(private cookieService: CookieService) {
@@ -100,6 +112,39 @@ export class StockService {
     }
 
     return await this.parseGetStockResponseBody(response);
+  }
+
+  public async getStockDataInPastDays(abbreviation: string): Promise<StockDataDto[]> {
+    let numberOfDays = 15;
+
+    let response: Response = await this.backendClientAPI.getStockDataInPastDays(
+      this.cookieService.get('token'),
+      abbreviation,
+      numberOfDays
+    );
+
+    if(response.status != 200) {
+      return [new StockDataDto(new Date(), -999999999)];
+    }
+
+    let data = await this.parseStockDataResponseBody(response);
+    return data.reverse();
+  }
+
+  public async getStockDataPrediction(abbreviation: string): Promise<StockDataDto[]> {
+    let numberOfDays = 15;
+
+    let response: Response = await this.backendClientAPI.getStockPrediction(
+      this.cookieService.get('token'),
+      abbreviation,
+      numberOfDays
+    );
+
+    if(response.status != 200) {
+      return [new StockDataDto(new Date(), -999999999)];
+    }
+
+    return await this.parseStockDataResponseBody(response);
   }
 
   public async addStockComment(abbreviation: string, message: string): Promise<Response> {

@@ -3,14 +3,21 @@ import {RegisterRequestDto} from "../dtos/RegisterRequestDto";
 
 export class BackendClientAPI {
   private static readonly BACKEND_URL = "https://localhost:5001";
+
   private static readonly LOGIN_ENDPOINT = "/api/User/LoginUser";
   private static readonly REGISTER_ENDPOINT = "/api/User/RegisterUser";
+
   private static readonly ALL_STOCKS_ENDPOINT = "/api/Stock/GetAllStocks";
   private static readonly FAVORITE_STOCKS_ENDPOINT = "/api/User/GetFavouriteStocks";
+
   private static readonly STOCK_ENDPOINT = "/api/Stock/GetStock";
+  private static readonly STOCK_DATA_ENDPOINT = "/api/Stock/GetStockData";
+  private static readonly STOCK_PREDICTION_ENDPOINT = "/api/Stock/GetStockPrediction";
+
   private static readonly ADD_COMMENT_ENDPOINT = "/api/Comment/AddComment";
   private static readonly LIKE_COMMENT_ENDPOINT = "/api/Comment/Upvote";
   private static readonly DISLIKE_COMMENT_ENDPOINT = "/api/Comment/Downvote";
+
   private static readonly ADD_FAVORITE_COMMENT_ENDPOINT = "/api/User/AddFavouriteStock";
   private static readonly REMOVE_FAVORITE_COMMENT_ENDPOINT = "/api/User/RemoveFavouriteStock";
 
@@ -60,10 +67,35 @@ export class BackendClientAPI {
 
   public async getStockByAbbreviation(authorization: string, abbreviation: string): Promise<Response> {
     let endpoint = `${BackendClientAPI.endpoint(BackendClientAPI.STOCK_ENDPOINT)}?stockSymbol=${abbreviation}`;
+
     return await fetch(endpoint, {
       method: "GET",
       headers: {
         'Accept': 'application/json',
+        'Authorization': `Bearer ${authorization}`
+      }
+    });
+  }
+
+  public async getStockDataInPastDays(authorization: string, abbreviation: string, days: number): Promise<Response> {
+    let endpoint = `${BackendClientAPI.endpoint(BackendClientAPI.STOCK_DATA_ENDPOINT)}?name=${abbreviation}&days=${days}`;
+
+    return await fetch(endpoint, {
+      method: "GET",
+      headers: {
+        'Accept': '*/*',
+        'Authorization': `Bearer ${authorization}`
+      }
+    });
+  }
+
+  public async getStockPrediction(authorization: string, abbreviation: string, days: number): Promise<Response> {
+    let endpoint = `${BackendClientAPI.endpoint(BackendClientAPI.STOCK_PREDICTION_ENDPOINT)}?name=${abbreviation}&days=${days}`;
+
+    return await fetch(endpoint, {
+      method: "GET",
+      headers: {
+        'Accept': '*/*',
         'Authorization': `Bearer ${authorization}`
       }
     });

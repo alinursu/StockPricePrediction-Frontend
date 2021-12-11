@@ -26,14 +26,39 @@
     generally the leaders in their industry. It has been a widely followed indicator of the stock market since October
     1, 1928.</p>
   <div class="flex-container-row">
+    <!--    TODO: Dark theme -- https://valor-software.com/ng2-charts/ -->
     <div class="flex-container-column">
-      <h3>Fluctuatia pretului in ultimele 30 de zile</h3>
-      <img src="/assets/dummy-price-graph.jpg" alt="">
+      <h3>Fluctuatia pretului in ultimele 15 de zile</h3>
+
+      <div *ngIf="pastChartErrorMessage.length != 0" class="chart-error">
+        {{pastChartErrorMessage}}
+      </div>
+
+      <canvas *ngIf="pastChartErrorMessage.length == 0" baseChart width="600px" height="300px"
+              [datasets]="pastChartData"
+              [labels]="pastChartLabels"
+              [options]="lineChartOptions"
+              [colors]="lineChartColors"
+              [legend]="lineChartLegend"
+              [chartType]="lineChartType"
+              [plugins]="lineChartPlugins"></canvas>
     </div>
 
     <div class="flex-container-column">
-      <h3>Prezicerea pretului in urmatoarele 7 zile</h3>
-      <img src="/assets/dummy-price-graph.jpg" alt="">
+      <h3>Prezicerea pretului in urmatoarele 15 zile</h3>
+
+      <div *ngIf="futureChartErrorMessage.length != 0" class="chart-error">
+        {{futureChartErrorMessage}}
+      </div>
+
+      <canvas *ngIf="futureChartErrorMessage.length == 0" baseChart width="600px" height="300px"
+              [datasets]="futureChartData"
+              [labels]="futureChartLabels"
+              [options]="lineChartOptions"
+              [colors]="lineChartColors"
+              [legend]="lineChartLegend"
+              [chartType]="lineChartType"
+              [plugins]="lineChartPlugins"></canvas>
     </div>
   </div>
 
@@ -96,3 +121,5 @@
     </div>
   </div>
 </div>
+
+<script src="node_modules/chart.js/src/chart.js"></script>

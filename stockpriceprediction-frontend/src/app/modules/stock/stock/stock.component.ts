@@ -6,6 +6,10 @@ import {StockService} from "../../../services/stock.service";
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {StockDto} from "../../../models/dtos/StockDto";
 import {CommentDto} from "../../../models/dtos/CommentDto";
+import {StockDataDto} from "../../../models/dtos/StockDataDto";
+import {ChartDataSets, ChartType} from "chart.js";
+import {Color, Label} from "ng2-charts";
+
 
 @Component({
   selector: 'app-stock',
@@ -19,6 +23,66 @@ export class StockComponent implements OnInit {
   stockDto: StockDto = new StockDto("init", "init", [], false);
   successMessage: string = "";
   errorMessage: string = "";
+  pastChartErrorMessage: string = "";
+  futureChartErrorMessage: string = "";
+
+  // Past chart variables
+  public pastChartData: ChartDataSets[] = [
+    {
+      data: [],
+      label: 'Pret in Dolari Americani (USD)'
+    }
+  ];
+
+  public pastChartLabels: Label[] = [];
+
+  // Future chart variables
+  public futureChartData: ChartDataSets[] = [
+    {
+      data: [],
+      label: 'Pret in Dolari Americani (USD)'
+    }
+  ];
+
+  public futureChartLabels: Label[] = [];
+
+  // General chart variables
+  public lineChartOptions = {
+    responsive: true,
+    showLines: true,
+    scales: {
+      xAxes: [{
+        gridLines: {
+          color: "rgba(0, 0, 0, 0)",
+        }
+      }],
+      yAxes: [{
+        gridLines: {
+          color: "rgba(0, 0, 0, 0)",
+        }
+      }]
+    },
+    elements:
+      {
+        point:
+          {
+            radius: 5,
+            hitRadius: 5,
+            hoverRadius: 8,
+            hoverBorderWidth: 2
+          }
+      }
+  };
+  public lineChartColors: Color[] = [
+    {
+      borderColor: 'black',
+      backgroundColor: 'rgba(153,115,142,0.51)',
+      pointBackgroundColor: '#F64C72',
+    },
+  ];
+  public lineChartLegend = true;
+  public lineChartType: ChartType = "line";
+  public lineChartPlugins = [];
 
   private static compareCommentDtos(comment1: CommentDto, comment2: CommentDto): number {
     if (comment1.datePublishedAsDate().getTime() > comment2.datePublishedAsDate().getTime())
@@ -28,6 +92,37 @@ export class StockComponent implements OnInit {
       return 1;
 
     return 0;
+  }
+
+  private static extractValuesAndLabels(data: StockDataDto[]) {
+    let values = []
+    let labels = []
+
+    for (let i = 0; i < data.length; i++) {
+      let date = `${data[i].date.getDate()}/${data[i].date.getMonth() + 1}/${data[i].date.getFullYear()}`;
+
+      values.push(data[i].value);
+      labels.push(date);
+    }
+    return {values, labels};
+  }
+
+  private buildPastChart(data: StockDataDto[]) {
+    let {values, labels} = StockComponent.extractValuesAndLabels(data);
+
+    this.pastChartData = [
+      {data: values, label: 'Pret in Dolari Americani (USD)'},
+    ];
+    this.pastChartLabels = labels;
+  }
+
+  private buildFutureChart(data: StockDataDto[]) {
+    let {values, labels} = StockComponent.extractValuesAndLabels(data);
+
+    this.futureChartData = [
+      {data: values, label: 'Pret in Dolari Americani (USD)'},
+    ];
+    this.futureChartLabels = labels;
   }
 
   constructor(private componentDisplayerService: ComponentDisplayerService,
@@ -57,6 +152,29 @@ export class StockComponent implements OnInit {
 
     this.stockDto = await this.stockService.getStockByAbbreviation(this.stockAbbreviation);
     this.stockDto.comments.sort(StockComponent.compareCommentDtos);
+
+    let pastChartData: StockDataDto[] = await this.stockService.getStockDataInPastDays(
+      this.stockDto.abbreviation
+    );
+
+    if(pastChartData.length == 1 && pastChartData[0].value == -999999999) {
+      this.pastChartErrorMessage = "Serviciul este indisponibil momentan!";
+    }
+    else {
+      this.buildPastChart(pastChartData);
+    }
+
+    let futureChartData: StockDataDto[] = await this.stockService.getStockDataPrediction(
+      this.stockDto.abbreviation
+    );
+
+
+    if(futureChartData.length == 1 && futureChartData[0].value == -999999999) {
+      this.futureChartErrorMessage = "Serviciul este indisponibil momentan!";
+    }
+    else {
+      this.buildFutureChart(futureChartData);
+    }
   }
 
   getNumberOfComments(): number {
