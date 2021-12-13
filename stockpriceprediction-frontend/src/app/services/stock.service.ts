@@ -17,7 +17,7 @@ export class StockService {
     this._stocks = []
     for (let index in responseBody) {
       let stock = responseBody[index]
-      let stockDto: StockDto = new StockDto(stock['title'], stock['symbol'], [], false);
+      let stockDto: StockDto = new StockDto(stock['title'].replace('"', ''), stock['symbol'], [], false);
       this._stocks.push(stockDto);
     }
   }
@@ -43,7 +43,7 @@ export class StockService {
       }
     }
 
-    return new StockDto(responseBody['Title'], responseBody['Symbol'], comments, markedAsFavorite);
+    return new StockDto(responseBody['Title'].replace('"', ''), responseBody['Symbol'], comments, markedAsFavorite);
   }
 
   private async parseStockDataResponseBody(response: Response): Promise<StockDataDto[]> {
