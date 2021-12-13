@@ -114,9 +114,7 @@ export class StockService {
     return await this.parseGetStockResponseBody(response);
   }
 
-  public async getStockDataInPastDays(abbreviation: string): Promise<StockDataDto[]> {
-    let numberOfDays = 15;
-
+  public async getStockDataInPastDays(abbreviation: string, numberOfDays: number): Promise<StockDataDto[]> {
     let response: Response = await this.backendClientAPI.getStockDataInPastDays(
       this.cookieService.get('token'),
       abbreviation,
@@ -131,9 +129,7 @@ export class StockService {
     return data.reverse();
   }
 
-  public async getStockDataPrediction(abbreviation: string): Promise<StockDataDto[]> {
-    let numberOfDays = 15;
-
+  public async getStockDataPrediction(abbreviation: string, numberOfDays: number): Promise<StockDataDto[]> {
     let response: Response = await this.backendClientAPI.getStockPrediction(
       this.cookieService.get('token'),
       abbreviation,

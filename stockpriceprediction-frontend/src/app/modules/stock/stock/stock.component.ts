@@ -154,7 +154,7 @@ export class StockComponent implements OnInit {
     this.stockDto.comments.sort(StockComponent.compareCommentDtos);
 
     let pastChartData: StockDataDto[] = await this.stockService.getStockDataInPastDays(
-      this.stockDto.abbreviation
+      this.stockDto.abbreviation, 15
     );
 
     if(pastChartData.length == 1 && pastChartData[0].value == -999999999) {
@@ -165,7 +165,7 @@ export class StockComponent implements OnInit {
     }
 
     let futureChartData: StockDataDto[] = await this.stockService.getStockDataPrediction(
-      this.stockDto.abbreviation
+      this.stockDto.abbreviation, 15
     );
 
 

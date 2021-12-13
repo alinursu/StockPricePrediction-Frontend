@@ -14,4 +14,8 @@ export class StockDataDto {
   get value(): number {
     return this._value;
   }
+
+  public dateAsString(): string {
+    return `${this._date.getDate()}/${this._date.getMonth() + 1}/${this._date.getFullYear()}`;
+  }
 }
