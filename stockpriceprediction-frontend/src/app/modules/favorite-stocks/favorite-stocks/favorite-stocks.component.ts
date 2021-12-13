@@ -5,6 +5,7 @@ import {ComponentDisplayerService} from "../../../services/component-displayer.s
 import {Router} from "@angular/router";
 import {CookieService} from "ngx-cookie-service";
 import {formatDate} from "@angular/common";
+import {StockDataDto} from "../../../models/dtos/StockDataDto";
 
 @Component({
   selector: 'app-favorite-stocks',
@@ -45,6 +46,17 @@ export class FavoriteStocksComponent implements OnInit {
   async updateActualStocks() {
     let stocks = await this.stockService.getFavoriteStocks();
     this.actualStocks = stocks.slice(this.stocksIndex * this.displayStocksPerPage, (this.stocksIndex + 1) * this.displayStocksPerPage);
+
+    for (const stock of this.actualStocks) {
+      let response: StockDataDto[] = await this.stockService.getStockDataInPastDays(stock.abbreviation, 1);
+      let todayStockPrice = response.pop();
+
+      response = await this.stockService.getStockDataPrediction(stock.abbreviation, 1);
+      let tomorrowStockPrice = response.pop();
+
+      stock.todayPrice = todayStockPrice;
+      stock.tomorrowPrice = tomorrowStockPrice;
+    }
   }
 
   getActualStocks(): StockDto[] {
@@ -111,5 +123,19 @@ export class FavoriteStocksComponent implements OnInit {
 
   redirectToStockPage(stock: StockDto) {
     this.router.navigate([`/stock/${stock.abbreviation}`]);
+  }
+
+  getStockPricesDifference(stock: StockDto): number | undefined {
+    if(stock.todayPrice == undefined || stock.tomorrowPrice == undefined) {
+      return undefined;
+    }
+
+    if(stock.todayPrice.value == -999999999 || stock.tomorrowPrice.value == -999999999) {
+      return undefined;
+    }
+
+    let difference = stock.tomorrowPrice.value - stock.todayPrice.value;
+    let percent = difference * stock.todayPrice.value / 100;
+    return Number(percent.toFixed(4));
   }
 }

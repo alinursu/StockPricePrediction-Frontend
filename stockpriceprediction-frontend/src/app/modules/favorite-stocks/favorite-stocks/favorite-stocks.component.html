@@ -25,10 +25,26 @@
       <h3>{{stock.abbreviation}}</h3>
     </div>
 
-    <div class="flex-container-column"> <!-- TODO: This is hardcoded-->
-      <p>Pretul actual pentru un stock: <b>10$</b></p>
-      <p>Pretul prezis pentru {{getTomorrowDateAsString()}}: <b>12$</b></p>
-      <p class="price-increased">&#8599; Crestere preconizata de 1.58%</p>
+    <div class="flex-container-column">
+      <p>Pretul actual:
+        <b>{{stock.todayPrice != undefined ?
+          (stock.todayPrice.value != -999999999 ? stock.todayPrice.value + "$" : "Serviciul este indisponibil!") :
+          "Serviciul este indisponibil!"}}</b>
+      </p>
+
+      <p>Pretul prezis
+        pentru {{stock.tomorrowPrice != undefined ? stock.tomorrowPrice.dateAsString() : getTomorrowDateAsString()}}:
+        <b>{{stock.tomorrowPrice != undefined ?
+          (stock.tomorrowPrice.value != -999999999 ? stock.tomorrowPrice.value + "$" : "Serviciul este indisponibil!") :
+          "Serviciul este indisponibil!"}}</b>
+      </p>
+
+      <p *ngIf="getStockPricesDifference(stock)! != undefined"
+         [ngClass]="getStockPricesDifference(stock)! > 0 ? 'price-increased' : 'price-decreased'">
+        {{(getStockPricesDifference(stock)! > 0 ?
+        'Crestere preconizata de ' + getStockPricesDifference(stock) + '%' :
+        'Scadere preconizata de ' + getStockPricesDifference(stock) + '%')}}
+      </p>
     </div>
   </div>
 </div>
