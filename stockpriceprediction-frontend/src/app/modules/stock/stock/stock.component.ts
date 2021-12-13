@@ -153,6 +153,10 @@ export class StockComponent implements OnInit {
     this.stockDto = await this.stockService.getStockByAbbreviation(this.stockAbbreviation);
     this.stockDto.comments.sort(StockComponent.compareCommentDtos);
 
+    if(this.stockDto.name == 'error') {
+      return ;
+    }
+
     let pastChartData: StockDataDto[] = await this.stockService.getStockDataInPastDays(
       this.stockDto.abbreviation, 15
     );

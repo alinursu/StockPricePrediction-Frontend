@@ -48,14 +48,16 @@ export class FavoriteStocksComponent implements OnInit {
     this.actualStocks = stocks.slice(this.stocksIndex * this.displayStocksPerPage, (this.stocksIndex + 1) * this.displayStocksPerPage);
 
     for (const stock of this.actualStocks) {
-      let response: StockDataDto[] = await this.stockService.getStockDataInPastDays(stock.abbreviation, 1);
-      let todayStockPrice = response.pop();
-
-      response = await this.stockService.getStockDataPrediction(stock.abbreviation, 1);
-      let tomorrowStockPrice = response.pop();
-
-      stock.todayPrice = todayStockPrice;
-      stock.tomorrowPrice = tomorrowStockPrice;
+      if(stock.name != 'empty') {
+        let response: StockDataDto[] = await this.stockService.getStockDataInPastDays(stock.abbreviation, 1);
+        let todayStockPrice = response.pop();
+  
+        response = await this.stockService.getStockDataPrediction(stock.abbreviation, 1);
+        let tomorrowStockPrice = response.pop();
+  
+        stock.todayPrice = todayStockPrice;
+        stock.tomorrowPrice = tomorrowStockPrice;
+      }
     }
   }
 
