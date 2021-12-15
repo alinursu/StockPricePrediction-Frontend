@@ -135,7 +135,7 @@ export class AllStocksComponent implements OnInit {
     }
 
     let difference = stock.tomorrowPrice.value - stock.todayPrice.value;
-    let percent = difference * stock.todayPrice.value / 100;
+    let percent = difference / stock.todayPrice.value * 100;
     return Number(percent.toFixed(4));
   }
 }
