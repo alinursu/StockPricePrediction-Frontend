@@ -125,8 +125,7 @@ export class StockService {
       return [new StockDataDto(new Date(), -999999999)];
     }
 
-    let data = await this.parseStockDataResponseBody(response);
-    return data.reverse();
+    return await this.parseStockDataResponseBody(response);
   }
 
   public async getStockDataPrediction(abbreviation: string, numberOfDays: number): Promise<StockDataDto[]> {
