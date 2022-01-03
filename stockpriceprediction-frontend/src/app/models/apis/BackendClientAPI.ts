@@ -105,9 +105,9 @@ export class BackendClientAPI {
     return await fetch(BackendClientAPI.endpoint(BackendClientAPI.ADD_COMMENT_ENDPOINT), {
       method: "POST",
       body: JSON.stringify({
-        "message": message,
-        "stockSymbol": abbreviation,
-        'creationDate': new Date().toISOString()
+        'Message': message,
+        'StockSymbol': abbreviation,
+        'CreationDate': new Date().toISOString()
       }),
       headers: {
         'Accept': 'application/json',

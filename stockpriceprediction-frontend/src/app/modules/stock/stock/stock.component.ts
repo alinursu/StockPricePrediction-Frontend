@@ -233,6 +233,9 @@ export class StockComponent implements OnInit {
     if (responseStatusCode == 200) {
       comment.incrementLikes();
     }
+    else if(responseStatusCode == 409){
+      comment.decrementLikes();
+    }
   }
 
   async dislikeComment(comment: CommentDto) {
@@ -240,6 +243,9 @@ export class StockComponent implements OnInit {
 
     if (responseStatusCode == 200) {
       comment.incrementDislikes();
+    }
+    else if(responseStatusCode == 409){
+      comment.decrementDislikes();
     }
   }
 

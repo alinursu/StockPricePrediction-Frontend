@@ -51,4 +51,11 @@ export class CommentDto {
   public incrementDislikes() {
     this._dislikes++;
   }
+  public decrementLikes() {
+    this._likes--;
+  }
+
+  public decrementDislikes() {
+    this._dislikes--;
+  }
 }
