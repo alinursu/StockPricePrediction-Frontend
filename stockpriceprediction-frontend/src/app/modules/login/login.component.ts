@@ -13,7 +13,7 @@ import {ComponentDisplayerService} from "../../services/component-displayer.serv
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   public errorMessage: string | null = null;
-  private requested: boolean = false;
+  public requested: boolean = false;
 
   constructor(private userService: UserService,
               private componentDisplayerService : ComponentDisplayerService,
@@ -43,6 +43,7 @@ export class LoginComponent implements OnInit {
   }
 
   async loginSubmitted() {
+    this.requested = true;
     let response = await this.userService.handleLoginRequest(this.loginForm.value);
 
     // @ts-ignore
@@ -58,6 +59,8 @@ export class LoginComponent implements OnInit {
       this.requested = true;
       this.loginForm.controls['password'].setValue('');
     }
+
+    this.requested = false;
   }
 
   email(): AbstractControl | null {
