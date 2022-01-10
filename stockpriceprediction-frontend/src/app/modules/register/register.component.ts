@@ -15,6 +15,7 @@ export class RegisterComponent implements OnInit {
   public errorMessage: string | null = null;
   public successMessage: string | null = null;
   private requested: number = 0;
+  public registerIsSubmitted: boolean = false;
 
   constructor(private userService: UserService,
               private componentDisplayerService: ComponentDisplayerService,
@@ -57,7 +58,9 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
+    this.registerIsSubmitted = true;
     let response = await this.userService.handleRegisterRequest(this.registerForm.value);
+    this.registerIsSubmitted = false;
 
     // @ts-ignore
     if (response.status == 201) {
