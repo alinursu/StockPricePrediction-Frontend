@@ -227,20 +227,20 @@ export class StockComponent implements OnInit {
 
   async likeComment(comment: CommentDto) {
     let responseStatusCode = await this.stockService.likeStockComment(comment.id);
-
+    console.log(responseStatusCode);
     if (responseStatusCode == 200) {
       comment.incrementLikes();
-    } else if (responseStatusCode == 409) {
+    } else if (responseStatusCode == 204) {
       comment.decrementLikes();
     }
   }
 
   async dislikeComment(comment: CommentDto) {
     let responseStatusCode = await this.stockService.dislikeStockComment(comment.id);
-
+    console.log(responseStatusCode);
     if (responseStatusCode == 200) {
       comment.incrementDislikes();
-    } else if (responseStatusCode == 409) {
+    } else if (responseStatusCode == 204) {
       comment.decrementDislikes();
     }
   }
