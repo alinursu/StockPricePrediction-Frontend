@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ComponentDisplayerService} from "../../../services/component-displayer.service";
 
 @Component({
@@ -8,7 +8,7 @@ import {ComponentDisplayerService} from "../../../services/component-displayer.s
 })
 export class NotFoundComponent implements OnInit {
 
-  constructor(private componentDisplayerService : ComponentDisplayerService) {
+  constructor(private componentDisplayerService: ComponentDisplayerService) {
     this.componentDisplayerService.displayHeaderAndFooter = true;
     this.componentDisplayerService.allStocksMenuItemHighlighted = false;
     this.componentDisplayerService.favoriteStocksMenuItemHighlighted = false;

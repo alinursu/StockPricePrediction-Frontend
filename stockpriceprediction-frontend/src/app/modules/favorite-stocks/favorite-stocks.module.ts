@@ -1,7 +1,6 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FavoriteStocksComponent } from './favorite-stocks/favorite-stocks.component';
-
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FavoriteStocksComponent} from './favorite-stocks/favorite-stocks.component';
 
 
 @NgModule({
@@ -12,4 +11,5 @@ import { FavoriteStocksComponent } from './favorite-stocks/favorite-stocks.compo
     CommonModule
   ]
 })
-export class FavoriteStocksModule { }
+export class FavoriteStocksModule {
+}

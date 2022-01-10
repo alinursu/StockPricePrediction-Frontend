@@ -16,13 +16,13 @@ export class LoginComponent implements OnInit {
   public requested: boolean = false;
 
   constructor(private userService: UserService,
-              private componentDisplayerService : ComponentDisplayerService,
+              private componentDisplayerService: ComponentDisplayerService,
               private router: Router,
               private formBuilder: FormBuilder,
               private cookieService: CookieService) {
     this.componentDisplayerService.displayHeaderAndFooter = false;
 
-    if(this.cookieService.get('token') != '') {
+    if (this.cookieService.get('token') != '') {
       this.router.navigate(['/forbidden'])
     }
 
@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
     })
 
     this.loginForm.valueChanges.subscribe(value => {
-      if(!this.requested) {
+      if (!this.requested) {
         this.errorMessage = null;
       }
       this.requested = false;

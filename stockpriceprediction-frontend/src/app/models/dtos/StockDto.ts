@@ -7,7 +7,7 @@ export class StockDto {
   private _comments: CommentDto[];
   private _isMarkedAsFavorite: boolean;
   private _todayPrice: StockDataDto | undefined;
-  private _tomorrowPrice: StockDataDto| undefined;
+  private _tomorrowPrice: StockDataDto | undefined;
 
   constructor(name: string, abbreviation: string, comments: CommentDto[] = [],
               isMarkedAsFavorite: boolean) {

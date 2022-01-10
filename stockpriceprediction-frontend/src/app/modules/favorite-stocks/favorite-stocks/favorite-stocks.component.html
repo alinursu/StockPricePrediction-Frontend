@@ -7,11 +7,13 @@
 
 <div *ngIf="getActualStocks().length == 0" class="flex-container-column" id="spinner"></div>
 
-<div *ngIf="getActualStocks().length == 1 && getActualStocks()[0].abbreviation == 'error'" class="flex-container-column stocks-error">
+<div *ngIf="getActualStocks().length == 1 && getActualStocks()[0].abbreviation == 'error'"
+     class="flex-container-column stocks-error">
   <h2>Eroare: Serviciul nu este disponibil momentan!</h2>
 </div>
 
-<div *ngIf="getActualStocks().length == 1 && getActualStocks()[0].abbreviation == 'empty'" class="flex-container-column stocks-error">
+<div *ngIf="getActualStocks().length == 1 && getActualStocks()[0].abbreviation == 'empty'"
+     class="flex-container-column stocks-error">
   <h2>Nu ai adaugat niciun stock la favorite!</h2>
 </div>
 

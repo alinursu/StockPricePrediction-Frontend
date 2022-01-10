@@ -153,18 +153,17 @@ export class StockComponent implements OnInit {
     this.stockDto = await this.stockService.getStockByAbbreviation(this.stockAbbreviation);
     this.stockDto.comments.sort(StockComponent.compareCommentDtos);
 
-    if(this.stockDto.name == 'error') {
-      return ;
+    if (this.stockDto.name == 'error') {
+      return;
     }
 
     let pastChartData: StockDataDto[] = await this.stockService.getStockDataInPastDays(
       this.stockDto.abbreviation, 15
     );
 
-    if(pastChartData.length == 1 && pastChartData[0].value == -999999999) {
+    if (pastChartData.length == 1 && pastChartData[0].value == -999999999) {
       this.pastChartErrorMessage = "Serviciul este indisponibil momentan!";
-    }
-    else {
+    } else {
       this.buildPastChart(pastChartData);
     }
 
@@ -173,10 +172,9 @@ export class StockComponent implements OnInit {
     );
 
 
-    if(futureChartData.length == 1 && futureChartData[0].value == -999999999) {
+    if (futureChartData.length == 1 && futureChartData[0].value == -999999999) {
       this.futureChartErrorMessage = "Serviciul este indisponibil momentan!";
-    }
-    else {
+    } else {
       this.buildFutureChart(futureChartData);
     }
   }
@@ -232,8 +230,7 @@ export class StockComponent implements OnInit {
 
     if (responseStatusCode == 200) {
       comment.incrementLikes();
-    }
-    else if(responseStatusCode == 409){
+    } else if (responseStatusCode == 409) {
       comment.decrementLikes();
     }
   }
@@ -243,8 +240,7 @@ export class StockComponent implements OnInit {
 
     if (responseStatusCode == 200) {
       comment.incrementDislikes();
-    }
-    else if(responseStatusCode == 409){
+    } else if (responseStatusCode == 409) {
       comment.decrementDislikes();
     }
   }

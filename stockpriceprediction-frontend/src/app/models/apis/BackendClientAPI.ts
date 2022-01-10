@@ -142,7 +142,7 @@ export class BackendClientAPI {
   public async markStockAsFavorite(authorization: string, abbreviation: string): Promise<Response> {
     return await fetch(BackendClientAPI.endpoint(BackendClientAPI.ADD_FAVORITE_COMMENT_ENDPOINT), {
       method: "POST",
-      body:JSON.stringify({
+      body: JSON.stringify({
         stockSymbol: abbreviation
       }),
       headers: {
@@ -155,7 +155,7 @@ export class BackendClientAPI {
   public async markStockAsNotFavorite(authorization: string, abbreviation: string): Promise<Response> {
     return await fetch(BackendClientAPI.endpoint(BackendClientAPI.REMOVE_FAVORITE_COMMENT_ENDPOINT), {
       method: "POST",
-      body:JSON.stringify({
+      body: JSON.stringify({
         stockSymbol: abbreviation
       }),
       headers: {

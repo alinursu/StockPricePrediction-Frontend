@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { FavoriteStocksComponent } from './favorite-stocks.component';
+import {FavoriteStocksComponent} from './favorite-stocks.component';
 
 describe('FavoriteStocksComponent', () => {
   let component: FavoriteStocksComponent;
@@ -8,9 +8,9 @@ describe('FavoriteStocksComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FavoriteStocksComponent ]
+      declarations: [FavoriteStocksComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

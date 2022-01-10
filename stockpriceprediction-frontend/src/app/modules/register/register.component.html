@@ -6,10 +6,10 @@
     </div>
 
     <form [formGroup]="registerForm" (ngSubmit)="registerSubmitted()" class="flex-container-column">
-        <div *ngIf="errorMessage || successMessage" class="flex-container-column" id="message-container">
-          <h2 *ngIf="errorMessage" class="response-alert">{{errorMessage}}</h2>
-          <h2 *ngIf="successMessage" class="response-success">{{successMessage}}</h2>
-        </div>
+      <div *ngIf="errorMessage || successMessage" class="flex-container-column" id="message-container">
+        <h2 *ngIf="errorMessage" class="response-alert">{{errorMessage}}</h2>
+        <h2 *ngIf="successMessage" class="response-success">{{successMessage}}</h2>
+      </div>
 
       <div class="flex-container-column">
         <div class="flex-container-column">

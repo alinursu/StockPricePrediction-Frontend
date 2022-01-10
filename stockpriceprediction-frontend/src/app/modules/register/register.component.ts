@@ -48,7 +48,7 @@ export class RegisterComponent implements OnInit {
   }
 
   async registerSubmitted() {
-    if(this.registerForm.value.password !== this.registerForm.value.confirmPassword) {
+    if (this.registerForm.value.password !== this.registerForm.value.confirmPassword) {
       this.successMessage = null;
       this.errorMessage = "Eroare: Parolele introduse nu coincid!";
       this.requested = 2;

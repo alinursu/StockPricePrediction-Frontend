@@ -1,7 +1,6 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ForbiddenComponent } from './forbidden/forbidden.component';
-
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {ForbiddenComponent} from './forbidden/forbidden.component';
 
 
 @NgModule({
@@ -12,4 +11,5 @@ import { ForbiddenComponent } from './forbidden/forbidden.component';
     CommonModule
   ]
 })
-export class ForbiddenModule { }
+export class ForbiddenModule {
+}

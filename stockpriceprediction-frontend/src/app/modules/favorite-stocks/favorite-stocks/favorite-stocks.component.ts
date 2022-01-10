@@ -48,13 +48,13 @@ export class FavoriteStocksComponent implements OnInit {
     this.actualStocks = stocks.slice(this.stocksIndex * this.displayStocksPerPage, (this.stocksIndex + 1) * this.displayStocksPerPage);
 
     for (const stock of this.actualStocks) {
-      if(stock.name != 'empty') {
+      if (stock.name != 'empty') {
         let response: StockDataDto[] = await this.stockService.getStockDataInPastDays(stock.abbreviation, 1);
         let todayStockPrice = response.pop();
-  
+
         response = await this.stockService.getStockDataPrediction(stock.abbreviation, 1);
         let tomorrowStockPrice = response.pop();
-  
+
         stock.todayPrice = todayStockPrice;
         stock.tomorrowPrice = tomorrowStockPrice;
       }
@@ -66,7 +66,7 @@ export class FavoriteStocksComponent implements OnInit {
   }
 
   async updateNumberOfPages(stocks: StockDto[] = []) {
-    if(stocks.length == 0) {
+    if (stocks.length == 0) {
       stocks = await this.getStocks();
     }
 
@@ -128,11 +128,11 @@ export class FavoriteStocksComponent implements OnInit {
   }
 
   getStockPricesDifference(stock: StockDto): number | undefined {
-    if(stock.todayPrice == undefined || stock.tomorrowPrice == undefined) {
+    if (stock.todayPrice == undefined || stock.tomorrowPrice == undefined) {
       return undefined;
     }
 
-    if(stock.todayPrice.value == -999999999 || stock.tomorrowPrice.value == -999999999) {
+    if (stock.todayPrice.value == -999999999 || stock.tomorrowPrice.value == -999999999) {
       return undefined;
     }
 

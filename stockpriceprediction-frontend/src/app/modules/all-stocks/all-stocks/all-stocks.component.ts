@@ -64,7 +64,7 @@ export class AllStocksComponent implements OnInit {
   }
 
   async updateNumberOfPages(stocks: StockDto[] = []) {
-    if(stocks.length == 0) {
+    if (stocks.length == 0) {
       stocks = await this.getStocks();
     }
 
@@ -126,11 +126,11 @@ export class AllStocksComponent implements OnInit {
   }
 
   getStockPricesDifference(stock: StockDto): number | undefined {
-    if(stock.todayPrice == undefined || stock.tomorrowPrice == undefined) {
+    if (stock.todayPrice == undefined || stock.tomorrowPrice == undefined) {
       return undefined;
     }
 
-    if(stock.todayPrice.value == -999999999 || stock.tomorrowPrice.value == -999999999) {
+    if (stock.todayPrice.value == -999999999 || stock.tomorrowPrice.value == -999999999) {
       return undefined;
     }
 
