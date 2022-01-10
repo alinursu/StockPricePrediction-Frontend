@@ -70,10 +70,15 @@ export class RegisterComponent implements OnInit {
       const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
       await delay(2000);
       this.router.navigate(['/login']);
-    } else {
-      // @ts-ignore
-      this.errorMessage = response.text;
-      this.successMessage = null;
+    } else { // @ts-ignore
+      if (response.status == 409) {
+        this.errorMessage = "Email-ul este asociat unui cont existent!";
+        this.successMessage = null;
+      } else {
+        // @ts-ignore
+        this.errorMessage = response.text;
+        this.successMessage = null;
+      }
     }
     this.requested = 2;
     this.registerForm.controls['password'].setValue('');
