@@ -51,6 +51,10 @@ export class FavoriteStocksComponent implements OnInit {
     let stocks = await this.stockService.getFavoriteStocks();
     this.actualStocks = stocks.slice(this.stocksIndex * this.displayStocksPerPage, (this.stocksIndex + 1) * this.displayStocksPerPage);
 
+    await this.getPastDataAndPredictionForActualStocks();
+  }
+
+  private async getPastDataAndPredictionForActualStocks() {
     for (const stock of this.actualStocks) {
       if (stock.name != 'empty') {
         let response: StockDataDto[] = await this.stockService.getStockDataInPastDays(stock.abbreviation, 1);
@@ -116,6 +120,7 @@ export class FavoriteStocksComponent implements OnInit {
       );
       this.filtered = true;
       await this.updateNumberOfPages(this.actualStocks);
+      await this.getPastDataAndPredictionForActualStocks();
     } else {
       await this.updateActualStocks();
       await this.updateNumberOfPages();

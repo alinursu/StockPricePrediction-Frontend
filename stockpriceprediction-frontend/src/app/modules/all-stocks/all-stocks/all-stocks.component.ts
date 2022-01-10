@@ -51,6 +51,10 @@ export class AllStocksComponent implements OnInit {
     let stocks = await this.stockService.getAllStocks();
     this.actualStocks = stocks.slice(this.stocksIndex * this.displayStocksPerPage, (this.stocksIndex + 1) * this.displayStocksPerPage);
 
+    await this.getPastDataAndPredictionForActualStocks();
+  }
+
+  private async getPastDataAndPredictionForActualStocks() {
     for (const stock of this.actualStocks) {
       let response: StockDataDto[] = await this.stockService.getStockDataInPastDays(stock.abbreviation, 1);
       let todayStockPrice = response.pop();
@@ -114,6 +118,7 @@ export class AllStocksComponent implements OnInit {
       );
       this.filtered = true;
       await this.updateNumberOfPages(this.actualStocks);
+      await this.getPastDataAndPredictionForActualStocks();
     } else {
       await this.updateActualStocks();
       await this.updateNumberOfPages();
