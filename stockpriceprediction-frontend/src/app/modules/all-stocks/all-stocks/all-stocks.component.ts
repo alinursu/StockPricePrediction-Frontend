@@ -18,6 +18,7 @@ export class AllStocksComponent implements OnInit {
   private actualStocks: StockDto[] = []
   private filtered: boolean = false;
   private numberOfPages: number = 0;
+  public requestedStocks: boolean = false;
 
   constructor(private htmlDocument: ElementRef,
               private stockService: StockService,
@@ -40,7 +41,10 @@ export class AllStocksComponent implements OnInit {
   }
 
   async getStocks(): Promise<StockDto[]> {
-    return await this.stockService.getAllStocks();
+    this.requestedStocks = true;
+    let stocks = await this.stockService.getAllStocks();
+    this.requestedStocks = false;
+    return stocks;
   }
 
   async updateActualStocks() {
